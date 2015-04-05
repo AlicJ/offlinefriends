@@ -7,7 +7,10 @@ public class Person {
     String firstName;
     String lastName;
 
-    public Person(){}
+    public Person(){
+		this.firstName = "";
+        this.lastName = "";
+	}
 
     public Person(String first, String last){
         this.firstName = first;
@@ -21,6 +24,14 @@ public class Person {
     public void setLastName(String last){
         lastName = last;
     }
+	
+	public String getFirstName(){
+		return firstName;
+	}
+	
+	public String getLastName(){
+		return lastName;
+	}
 
     public int compareTo(String that){
         return this.toString().compareTo(that);

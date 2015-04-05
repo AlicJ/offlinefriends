@@ -14,7 +14,7 @@ import java.nio.charset.*;
 import java.io.*;
 import java.util.Arrays;
 
-public class getNames {
+public class GenerateNames {
 	
 	private static String[] first = new String[2000];
 	private static String[] last = new String[2000];
@@ -67,7 +67,7 @@ public class getNames {
 		}
 
 		// write names to file
-		Path outfile = Paths.get("src/Model/names");
+		Path outfile = Paths.get("src/Model/dist.names");
 		Charset charset = Charset.forName("US-ASCII");
 		String s;
 		try (BufferedWriter writer = Files.newBufferedWriter(outfile, charset)) {
