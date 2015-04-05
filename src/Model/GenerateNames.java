@@ -13,6 +13,7 @@ import java.nio.file.*;
 import java.nio.charset.*;
 import java.io.*;
 import java.util.Arrays;
+import org.apache.commons.lang3.text.WordUtils;
 
 public class GenerateNames {
 	
@@ -74,6 +75,7 @@ public class GenerateNames {
 			for (int i=0; i<2000; i++) {
 				// combine firstname and lastname
 				s = first[i] + " " + last[i] + "\n";
+				s = WordUtils.capitalizeFully(s);
 				// write to file
 				writer.write(s, 0, s.length());
 			}

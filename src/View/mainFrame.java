@@ -1,5 +1,14 @@
 package View;
 
+import Model.InitData;
+import Model.Person;
+import java.util.Arrays;
+import javax.swing.ListModel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
 // https://www.youtube.com/watch?v=fJxF-uWD7aU
 
 /*
@@ -13,11 +22,16 @@ package View;
  * @author Alic Jiang
  */
 public class mainFrame extends javax.swing.JFrame {
-
+	private String searchTerm = "";
+	private static InitData personData;
+	private static DefaultListModel listModel;
+	private int currentSize = 500;
+	
 	/**
 	 * Creates new form mainFrame
 	 */
 	public mainFrame() {
+		initModel();
 		initComponents();
 	}
 
@@ -30,41 +44,77 @@ public class mainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
-        buttonGroup4 = new javax.swing.ButtonGroup();
-        buttonGroup5 = new javax.swing.ButtonGroup();
-        buttonGroup6 = new javax.swing.ButtonGroup();
-        buttonGroup7 = new javax.swing.ButtonGroup();
-        buttonGroup8 = new javax.swing.ButtonGroup();
-        buttonGroup9 = new javax.swing.ButtonGroup();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
+        dictSize = new javax.swing.ButtonGroup();
+        searchInput = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        resultPanel = new javax.swing.JScrollPane();
+        resultList = new javax.swing.JList();
+        title = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        size500 = new javax.swing.JRadioButton();
+        size1000 = new javax.swing.JRadioButton();
+        size2000 = new javax.swing.JRadioButton();
+        version = new javax.swing.JLabel();
+        credit = new javax.swing.JLabel();
+        dictSizeTitle = new javax.swing.JLabel();
+        searchTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Offline Friends");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchInputActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Search");
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Offline Friends");
+        resultList.setModel(listModel);
+        resultPanel.setViewportView(resultList);
+
+        title.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        title.setText("Offline Friends");
+
+        dictSize.add(size500);
+        size500.setSelected(true);
+        size500.setText("500");
+        size500.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                size500ActionPerformed(evt);
+            }
+        });
+
+        dictSize.add(size1000);
+        size1000.setText("1000");
+        size1000.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                size1000ActionPerformed(evt);
+            }
+        });
+
+        dictSize.add(size2000);
+        size2000.setText("2000");
+        size2000.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                size2000ActionPerformed(evt);
+            }
+        });
+
+        version.setText("v 0.1.0");
+
+        credit.setText("Created by Mingfei Jiang, Zichen Jiang, and Kirk Montour");
+
+        dictSizeTitle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        dictSizeTitle.setText("Dictionary Size");
+
+        searchTime.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        searchTime.setText("Search");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,14 +122,28 @@ public class mainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                .addComponent(jSeparator1))
+                            .addComponent(dictSizeTitle)
+                            .addComponent(size500)
+                            .addComponent(size1000)
+                            .addComponent(size2000))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(resultPanel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(version)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(credit)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -88,21 +152,100 @@ public class mainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchBtn))
+                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dictSizeTitle))
+                    .addComponent(searchTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(size500)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(size1000)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(size2000))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(resultPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(version)
+                    .addComponent(credit))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void size500ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size500ActionPerformed
+        updatePersonData(500);
+    }//GEN-LAST:event_size500ActionPerformed
 
+    private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
+        // TODO add your handling code here:
+		searchBtnActionPerformed(evt);
+    }//GEN-LAST:event_searchInputActionPerformed
+
+    private void size1000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size1000ActionPerformed
+        updatePersonData(1000);
+    }//GEN-LAST:event_size1000ActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+		searchTerm = searchInput.getText();
+		searchTime.setText(searchTerm);
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void size2000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size2000ActionPerformed
+        updatePersonData(2000);
+    }//GEN-LAST:event_size2000ActionPerformed
+	
+	// initialize personData (import names from file)
+	// and set the JList with the names from personData
+	private void initModel() {
+		personData = new InitData();
+		setListModel();
+	}
+	
+	// update the personData variable to the desired size
+	private void updatePersonData(int size) {
+		updateSearchText("Importing dictionary, please stand by ...");
+		if (currentSize == size) {
+			return;
+		}else {
+			currentSize = size;
+			personData = new InitData(size);
+			setListModel();
+			updatePersonList();
+		}
+	}
+	
+	// update the listModel variable, prepare to be displayed
+	private void setListModel() {
+		listModel = new DefaultListModel();
+		Person[] data = personData.getData();
+		for (int i=0; i<data.length; i++) {
+			listModel.addElement(data[i]);
+		}
+	}
+	
+	// update the view (JList)
+	private void updatePersonList() {
+		resultList.setModel(listModel);
+        resultPanel.setViewportView(resultList);
+	}
+	
+	// update the JLable underneath the search bar
+	private void updateSearchText(String text) {
+		searchTime.setText(text);
+	}
+	
 	/**
 	 * @param args the command line arguments
 	 */
@@ -139,19 +282,19 @@ public class mainFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.ButtonGroup buttonGroup4;
-    private javax.swing.ButtonGroup buttonGroup5;
-    private javax.swing.ButtonGroup buttonGroup6;
-    private javax.swing.ButtonGroup buttonGroup7;
-    private javax.swing.ButtonGroup buttonGroup8;
-    private javax.swing.ButtonGroup buttonGroup9;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel credit;
+    private javax.swing.ButtonGroup dictSize;
+    private javax.swing.JLabel dictSizeTitle;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JList resultList;
+    private javax.swing.JScrollPane resultPanel;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchInput;
+    private javax.swing.JLabel searchTime;
+    private javax.swing.JRadioButton size1000;
+    private javax.swing.JRadioButton size2000;
+    private javax.swing.JRadioButton size500;
+    private javax.swing.JLabel title;
+    private javax.swing.JLabel version;
     // End of variables declaration//GEN-END:variables
 }

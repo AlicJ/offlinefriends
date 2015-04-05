@@ -20,17 +20,17 @@ import static org.junit.Assert.*;
 public class InitModelTest {
 
 	/**
-	 * Test of getModel method, of class InitModel.
+	 * Test of getModel method, of class InitData.
 	 */
 	@Test
 	public void testGetModel() {
 		System.out.println("getModel");
-		InitModel model1 = new InitModel();
-		int len1 = model1.getModel().length;
+		InitData model1 = new InitData();
+		int len1 = model1.getData().length;
 		assertEquals(500, len1);
 		
-		InitModel model2 = new InitModel(1000);
-		int len2 = model2.getModel().length;
+		InitData model2 = new InitData(1000);
+		int len2 = model2.getData().length;
 		assertEquals(1000, len2);
 	}
 	

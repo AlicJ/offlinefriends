@@ -17,14 +17,14 @@ import java.util.Arrays;
  *
  * @author Alic Jiang
  */
-public class InitModel {
+public class InitData {
 	public Person[] personData;
 	
-	public InitModel() {
+	public InitData() {
 		initialize(500);
 	}
 	
-	public InitModel(int len) {
+	public InitData(int len) {
 		initialize(len);
 	}
 	
@@ -48,13 +48,13 @@ public class InitModel {
 		}
 	}
 	
-	public Person[] getModel() {
+	public Person[] getData() {
 		return personData;
 	}
 	
 	public static void main (String[] args) {
-		InitModel model = new InitModel(500);
-		Person[] data = model.getModel();
-		System.out.println(Arrays.toString(model.getModel()));
+		InitData model = new InitData(500);
+		Person[] data = model.getData();
+		System.out.println(Arrays.toString(model.getData()));
 	}
 }
