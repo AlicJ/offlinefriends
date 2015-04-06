@@ -276,9 +276,11 @@ public class mainFrame extends javax.swing.JFrame {
 		Person[] result = search(searchTerm);
 		// convert Person[] to DefaultListModel
 		DefaultListModel searchResult = setListModel(result);
+		
 		// update view
 		if (result.length > 0) {
 			updateHintText("Found " + result.length + " results (" + searchTime + " ms)");
+			// write result to file
 			try {
 				writeResult(searchTerm);
 			} catch (IOException ex) {
