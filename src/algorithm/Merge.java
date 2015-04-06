@@ -31,7 +31,7 @@ public class Merge {
         for (int k = lo; k <= hi; k++) {
             if      (i > mid)              a[k] = aux[j++];
             else if (j > hi)               a[k] = aux[i++];
-            else if (aux[j].compareTo(aux[i])>0) a[k] = aux[j++];
+            else if (aux[j].compareTo(aux[i])<0) a[k] = aux[j++];
             else                           a[k] = aux[i++];
         }
     }
