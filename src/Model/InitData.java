@@ -6,6 +6,7 @@
 
 package Model;
 
+import algorithm.Merge;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,9 +53,15 @@ public class InitData {
 		return personData;
 	}
 	
+	public void mergeSort() {
+//		Merge.sortMerge(personData);
+	}
+	
 	public static void main (String[] args) {
 		InitData model = new InitData(500);
 		Person[] data = model.getData();
 		System.out.println(Arrays.toString(model.getData()));
+		
+		
 	}
 }
