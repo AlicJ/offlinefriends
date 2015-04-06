@@ -3,7 +3,7 @@ package Model;
 /**
  * Created by David on 2015-04-04.
  */
-public class Person {
+public class Person implements Comparable<Person>{
     String firstName;
     String lastName;
 
@@ -40,4 +40,9 @@ public class Person {
     public String toString(){
         return this.firstName + " " + this.lastName;
     }
+
+	@Override
+	public int compareTo(Person that) {
+		return this.toString().compareTo(that.toString());
+	}
 }
