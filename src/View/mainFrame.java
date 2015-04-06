@@ -6,6 +6,13 @@ import java.util.Arrays;
 import javax.swing.ListModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 import org.apache.commons.lang3.time.StopWatch;
@@ -270,9 +277,14 @@ public class mainFrame extends javax.swing.JFrame {
 		// convert Person[] to DefaultListModel
 		DefaultListModel searchResult = setListModel(result);
 		// update view
-		if (result.length > 0)
+		if (result.length > 0) {
 			updateHintText("Found " + result.length + " results (" + searchTime + " ms)");
-		else
+			try {
+				writeResult(searchTerm);
+			} catch (IOException ex) {
+				Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}else
 			updateHintText("No result");
 		updateResultList(searchResult);
     }//GEN-LAST:event_searchBtnActionPerformed
@@ -284,17 +296,17 @@ public class mainFrame extends javax.swing.JFrame {
 
 // change searching algorith to Binary Search
     private void BinarySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BinarySearchActionPerformed
-		algorithm = "BS";
+		algorithm = "bs";
 		updateHintText("Switched to Binary Search");
     }//GEN-LAST:event_BinarySearchActionPerformed
 	// change searching algorithm to Binary Search Tree
     private void BSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSTActionPerformed
-		algorithm = "BST";
+		algorithm = "bst";
 		updateHintText("Switched to Binary Search Tree");
     }//GEN-LAST:event_BSTActionPerformed
 	// change searching algorithm to Ternary Search Tree
     private void TSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TSTActionPerformed
-		algorithm = "TST";
+		algorithm = "tst";
 		updateHintText("Switched to Ternary Search Tree");
     }//GEN-LAST:event_TSTActionPerformed
 
@@ -354,7 +366,7 @@ public class mainFrame extends javax.swing.JFrame {
 		StopWatch sw = new StopWatch();
 		sw.start();
 		double startTime;
-		switch (algorithm.toLowerCase()) {
+		switch (algorithm) {
 			case "bs":
 				startTime = sw.getTime();
 				// implement binary search
@@ -378,6 +390,16 @@ public class mainFrame extends javax.swing.JFrame {
 		return result;
 	}
 
+	// write search result to file
+	private void writeResult(String searchTerm) throws IOException {
+		File file =new File("data/"+algorithm);
+		if(!file.exists()){
+    		file.createNewFile();
+    	}
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getName(), true)));
+		out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
+		out.close();
+	}
 
 	/**
 	 * @param args the command line arguments

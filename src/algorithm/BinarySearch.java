@@ -1,4 +1,4 @@
-package group5.offlinefriends;
+package algorithm;
 
 /**
  * Created by David on 2015-04-04.
