@@ -54,7 +54,7 @@ public class InitData {
 	}
 	
 	public void mergeSort() {
-//		Merge.sortMerge(personData);
+		Merge.sortMerge(personData);
 	}
 	
 	public static void main (String[] args) {
@@ -62,6 +62,8 @@ public class InitData {
 		Person[] data = model.getData();
 		System.out.println(Arrays.toString(model.getData()));
 		
+		model.mergeSort();
+		System.out.println(Arrays.toString(model.getData()));
 		
 	}
 }
