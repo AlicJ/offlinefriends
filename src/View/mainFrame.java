@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import org.apache.commons.lang3.time.StopWatch;
 
 // https://www.youtube.com/watch?v=fJxF-uWD7aU
 
@@ -16,19 +17,18 @@ import javax.swing.event.*;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Alic Jiang
  */
 public class mainFrame extends javax.swing.JFrame {
-	private String searchTerm = "";
+
 	private InitData personData;
-	private DefaultListModel listModel;
+	private DefaultListModel personListModel;
 	private int currentSize = 500;
 	private String algorithm = "bs";
-	private DefaultListModel searchResult;
-	
+	private double searchTime = 0;
+
 	/**
 	 * Creates new form mainFrame
 	 */
@@ -47,7 +47,7 @@ public class mainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         dictSize = new javax.swing.ButtonGroup();
-        algorithm = new javax.swing.ButtonGroup();
+        algType = new javax.swing.ButtonGroup();
         searchInput = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         resultPanel = new javax.swing.JScrollPane();
@@ -60,7 +60,7 @@ public class mainFrame extends javax.swing.JFrame {
         version = new javax.swing.JLabel();
         credit = new javax.swing.JLabel();
         dictSizeTitle = new javax.swing.JLabel();
-        searchTime = new javax.swing.JLabel();
+        hintText = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         BinarySearch = new javax.swing.JRadioButton();
@@ -69,6 +69,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Offline Friends");
+        setResizable(false);
 
         searchInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,7 +84,7 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
-        resultList.setModel(listModel);
+        resultList.setModel(personListModel);
         resultPanel.setViewportView(resultList);
 
         title.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -116,17 +117,19 @@ public class mainFrame extends javax.swing.JFrame {
 
         version.setText("v 0.1.0");
 
+        credit.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         credit.setText("Created by Mingfei Jiang, Zichen Jiang, and Kirk Montour");
 
         dictSizeTitle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dictSizeTitle.setText("Dictionary Size");
 
-        searchTime.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        searchTime.setText("Search");
+        hintText.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        hintText.setText("Search");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Algorithm");
 
+        algType.add(BinarySearch);
         BinarySearch.setSelected(true);
         BinarySearch.setText("Binary Search");
         BinarySearch.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +138,7 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        algType.add(BST);
         BST.setText("BST");
         BST.setToolTipText("");
         BST.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +147,7 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        algType.add(TST);
         TST.setText("TST");
         TST.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +183,7 @@ public class mainFrame extends javax.swing.JFrame {
                                 .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(searchTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(hintText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(version)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -200,7 +205,7 @@ public class mainFrame extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dictSizeTitle))
-                    .addComponent(searchTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(hintText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -234,95 +239,152 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// change dictionary size to 500
     private void size500ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size500ActionPerformed
-        updatePersonData(500);
+		updatePersonData(500);
     }//GEN-LAST:event_size500ActionPerformed
 
     private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
 		searchBtnActionPerformed(evt);
     }//GEN-LAST:event_searchInputActionPerformed
 
 	// change dictionary size to 1000
     private void size1000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size1000ActionPerformed
-        updatePersonData(1000);
+		updatePersonData(1000);
     }//GEN-LAST:event_size1000ActionPerformed
 
 	// search button action listener
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        // TODO add your handling code here:
-		searchTerm = searchInput.getText();
-		searchTime.setText(searchTerm);
+		// TODO add your handling code here:
+		String searchTerm = searchInput.getText();
+		hintText.setText("Searching for \"" + searchTerm + "\" ...");
+
+		// if search input is empty, show complete friend lst
+		if (searchTerm.length() == 0) {
+			updateResultList(personListModel);
+			hintText.setText("Showing complete friend list");
+			return;
+		}
+
+		// do the search
+		Person[] result = search(searchTerm);
+		// convert Person[] to DefaultListModel
+		DefaultListModel searchResult = setListModel(result);
+		// update view
+		if (result.length > 0)
+			updateHintText("Found " + result.length + " results (" + searchTime + " ms)");
+		else
+			updateHintText("No result");
+		updateResultList(searchResult);
     }//GEN-LAST:event_searchBtnActionPerformed
 
 	// change dictionary size to 2000
     private void size2000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size2000ActionPerformed
-        updatePersonData(2000);
+		updatePersonData(2000);
     }//GEN-LAST:event_size2000ActionPerformed
-	
+
 // change searching algorith to Binary Search
     private void BinarySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BinarySearchActionPerformed
-        algorithm = "BS";
+		algorithm = "BS";
+		updateHintText("Switched to Binary Search");
     }//GEN-LAST:event_BinarySearchActionPerformed
 	// change searching algorithm to Binary Search Tree
     private void BSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSTActionPerformed
-        algorithm = "BST";
+		algorithm = "BST";
+		updateHintText("Switched to Binary Search Tree");
     }//GEN-LAST:event_BSTActionPerformed
 	// change searching algorithm to Ternary Search Tree
     private void TSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TSTActionPerformed
-        algorithm = "TST";
+		algorithm = "TST";
+		updateHintText("Switched to Ternary Search Tree");
     }//GEN-LAST:event_TSTActionPerformed
-	
+
 	// initialize personData (import names from file)
 	// and set the JList with the names from personData
 	private void initModel() {
 		personData = new InitData();
-		setListModel();
+		personListModel = setListModel(personData.getData());
 	}
-	
+
 	// update the personData variable to the desired size
 	private void updatePersonData(int size) {
-		updateSearchText("Importing dictionary, please stand by ...");
 		if (currentSize == size) {
 			return;
-		}else {
+		} else {
+			updateHintText("Importing dictionary, please stand by ...");
 			currentSize = size;
+			// initilize stop watch to get time comsumed for importing dictionary
+			StopWatch sw = new StopWatch();
+			sw.start();
+			double startTime = sw.getTime();
 			personData = new InitData(size);
-			setListModel();
-			updatePersonList();
+			double runTime = sw.getTime() - startTime;
+			sw.stop();
+			// update person list model
+			personListModel = setListModel(personData.getData());
+			// update view
+			updateResultList(personListModel);
+			// update text
+			updateHintText("Import completed in " + Long.toString(Math.round(runTime)) + " ms");
 		}
 	}
-	
-	// update the listModel variable, prepare to be displayed
-	private void setListModel() {
-		listModel = new DefaultListModel();
-		Person[] data = personData.getData();
-		for (int i=0; i<data.length; i++) {
-			listModel.addElement(data[i]);
+
+	// update the personListModel variable, prepare to be displayed
+	private DefaultListModel setListModel(Person[] pData) {
+		DefaultListModel listModel = new DefaultListModel();
+		for (int i = 0; i < pData.length; i++) {
+			listModel.addElement(pData[i]);
 		}
+		return listModel;
 	}
-	
+
 	// update the view (JList)
-	private void updatePersonList() {
-		resultList.setModel(listModel);
-        resultPanel.setViewportView(resultList);
+	private void updateResultList(DefaultListModel list) {
+		resultList.setModel(list);
+		resultPanel.setViewportView(resultList);
 	}
-	
+
 	// update the JLable underneath the search bar
-	private void updateSearchText(String text) {
-		searchTime.setText(text);
+	private void updateHintText(String text) {
+		hintText.setText(text);
 	}
-	
-	// change searching algorithm
-	private void updateAlgorithm(String alg) {
-		
+
+	// searching algorithm
+	private Person[] search(String input) {
+		Person[] result = new Person[0];
+		StopWatch sw = new StopWatch();
+		sw.start();
+		double startTime;
+		switch (algorithm.toLowerCase()) {
+			case "bs":
+				startTime = sw.getTime();
+				// implement binary search
+				searchTime = sw.getTime() - startTime;
+				result = new Person[0];
+				break;
+			case "bst":
+				startTime = sw.getTime();
+				// implement binary search tree
+				searchTime = sw.getTime() - startTime;
+				result = new Person[0];
+				break;
+			case "tst":
+				startTime = sw.getTime();
+				// implement ternery search tree
+				searchTime = sw.getTime() - startTime;
+				result = new Person[0];
+				break;
+		}
+		sw.stop();
+		return result;
 	}
-	
+
+
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
 		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
 		 */
@@ -342,7 +404,7 @@ public class mainFrame extends javax.swing.JFrame {
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
 			java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
-        //</editor-fold>
+		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
@@ -356,10 +418,11 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton BST;
     private javax.swing.JRadioButton BinarySearch;
     private javax.swing.JRadioButton TST;
-    private javax.swing.ButtonGroup algorithm;
+    private javax.swing.ButtonGroup algType;
     private javax.swing.JLabel credit;
     private javax.swing.ButtonGroup dictSize;
     private javax.swing.JLabel dictSizeTitle;
+    private javax.swing.JLabel hintText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -367,7 +430,6 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane resultPanel;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField searchInput;
-    private javax.swing.JLabel searchTime;
     private javax.swing.JRadioButton size1000;
     private javax.swing.JRadioButton size2000;
     private javax.swing.JRadioButton size500;
