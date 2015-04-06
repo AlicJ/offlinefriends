@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.Arrays;
+import org.apache.commons.lang3.time.StopWatch;
 
 /**
  *
@@ -47,23 +48,31 @@ public class InitData {
 		} catch (IOException x) {
 			System.err.println(x);
 		}
+		// sort after reading names
+		Merge.sortMerge(personData);
 	}
 	
 	public Person[] getData() {
 		return personData;
 	}
 	
-	public void mergeSort() {
+	private void mergeSort() {
 		Merge.sortMerge(personData);
 	}
 	
 	public static void main (String[] args) {
-		InitData model = new InitData(500);
+		InitData model = new InitData(1000000);
 		Person[] data = model.getData();
-		System.out.println(Arrays.toString(model.getData()));
-		
+//		System.out.println(Arrays.toString(model.getData()));
+		// merge sort
+		StopWatch sw = new StopWatch();
+		sw.start();
+		double startTime = sw.getTime();
 		model.mergeSort();
-		System.out.println(Arrays.toString(model.getData()));
+		double runTime = sw.getTime() - startTime;
+		sw.stop();
+		System.out.println(runTime);
+//		System.out.println(Arrays.toString(model.getData()));
 		
 	}
 }
