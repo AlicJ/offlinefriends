@@ -57,8 +57,12 @@ public class InitData {
 		Merge.sortMerge(personData);
 	}
 	
+	public void mergeSortLast() {
+		Merge.sortMergeLast(personData);
+	}
+	
 	public static void main (String[] args) {
-		InitData model = new InitData(500);
+		InitData model = new InitData(10);
 		Person[] data = model.getData();
 		System.out.println(Arrays.toString(model.getData()));
 		

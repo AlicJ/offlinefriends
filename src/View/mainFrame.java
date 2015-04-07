@@ -271,60 +271,9 @@ public class mainFrame extends javax.swing.JFrame {
 			hintText.setText("Showing complete friend list");
 			return;
 		}
-		
-		Person[] result = new Person[0];
 
-//		if (searchTerm.equalsIgnoreCase("kirk")) {
-//			if (currentSize == 500) {
-//				result = new Person[]{new Person("Kirk", "Craig")};
-//				switch(algorithm) {
-//					case "bs": searchTime = 2; break;
-//					case "bst": searchTime = 2; break;
-//					case "tst": searchTime = 1; break;
-//				}
-//			}else if(currentSize == 1000) {
-//				result = new Person[]{
-//					new Person("Harley", "Kirk"), 
-//					new Person("Kirk", "Craig"), 
-//					new Person("Rosario","Kirkland")};
-//				switch(algorithm) {
-//					case "bs": searchTime = 3; break;
-//					case "bst": searchTime = 2; break;
-//					case "tst": searchTime = 1; break;
-//				}
-//			}else if(currentSize == 2000) {
-//				result = new Person[]{
-//					new Person("Ethel", "Kirkpatrick"),
-//					new Person("Harley", "Kirk"),
-//					new Person("Kirk", "Craig"),
-//					new Person("Rosario","Kirkland")
-//					};
-//				switch(algorithm) {
-//					case "bs": searchTime = 6; break;
-//					case "bst": searchTime = 4; break;
-//					case "tst": searchTime = 1; break;
-//				}
-//			}
-//		}else if (searchTerm.equalsIgnoreCase("alic") && currentSize >= 1000) {
-//			if(currentSize == 1000) {
-//				result = new Person[]{new Person("Alice","Ibarra"), new Person("Alicia","Seymour")};
-//				switch(algorithm) {
-//					case "bs": searchTime = 2; break;
-//					case "bst": searchTime = 1; break;
-//					case "tst": searchTime = 1; break;
-//				}
-//			}else if(currentSize == 2000) {
-//				result = new Person[]{new Person("Alice","Ibarra"), new Person("Alicia","Seymour")};
-//				switch(algorithm) {
-//					case "bs": searchTime = 4; break;
-//					case "bst": searchTime = 2; break;
-//					case "tst": searchTime = 1; break;
-//				}
-//			}
-//		}else{
-			// do the search
-			result = search(searchTerm);
-//		}
+		// do the search
+		Person[] result = search(searchTerm);
 		// convert Person[] to DefaultListModel
 		DefaultListModel searchResult = setListModel(result);
 		
@@ -449,7 +398,7 @@ public class mainFrame extends javax.swing.JFrame {
 		if(!file.exists()){
     		file.createNewFile();
     	}
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath(), true)));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getName(), true)));
 		out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
 		out.close();
 	}
