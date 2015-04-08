@@ -28,7 +28,6 @@ public class PersonTest {
 		String first = "first";
 		Person instance = new Person();
 		instance.setFirstName(first);
-		// TODO review the generated test code and remove the default call to fail.
 		assertEquals("first", instance.getFirstName());
 	}
 
@@ -41,7 +40,6 @@ public class PersonTest {
 		String last = "last";
 		Person instance = new Person();
 		instance.setLastName(last);
-		// TODO review the generated test code and remove the default call to fail.
 		assertEquals("last", instance.getLastName());
 	}
 
@@ -51,13 +49,11 @@ public class PersonTest {
 	@Test
 	public void testCompareTo() {
 		System.out.println("compareTo");
-		String that = "";
+		Person that = new Person();
 		Person instance = new Person();
 		int expResult = 0;
 		int result = instance.compareTo(that);
 		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
 	}
 
 	/**

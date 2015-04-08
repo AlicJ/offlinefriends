@@ -130,7 +130,7 @@ public class GenerateNames {
 		System.out.println("names check complete");
 		
 		// sort the names
-		Merge.sortMerge(names);
+//		Merge.sortMerge(names);
 
 		// write 1 million names to file
 		Path outfile = Paths.get("src/Model/dist.names");

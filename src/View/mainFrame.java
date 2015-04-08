@@ -402,7 +402,7 @@ public class mainFrame extends javax.swing.JFrame {
 		if(!file.exists()){
     		file.createNewFile();
     	}
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getName(), true)));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath(), true)));
 		out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
 		out.close();
 	}

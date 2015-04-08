@@ -55,19 +55,19 @@ public class InitData {
 			System.err.println(x);
 		}
 		// sort after reading names
-		Merge.sortMerge(personData);
+		Merge.mergeSortFirstName(personData);
 	}
 	
 	public Person[] getData() {
 		return personData;
 	}
 	
-	private void mergeSort() {
-		Merge.sortMerge(personData);
+	public void mergeSortFirst() {
+		Merge.mergeSortFirstName(personData);
 	}
 	
 	public void mergeSortLast() {
-		Merge.sortMergeLast(personData);
+		Merge.mergeSortLastName(personData);
 	}
 	
 	public static void main (String[] args) {
@@ -78,7 +78,7 @@ public class InitData {
 		StopWatch sw = new StopWatch();
 		sw.start();
 		double startTime = sw.getTime();
-		model.mergeSort();
+		model.mergeSortFirst();
 		double runTime = sw.getTime() - startTime;
 		sw.stop();
 		System.out.println(runTime);

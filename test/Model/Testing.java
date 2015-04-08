@@ -1,15 +1,19 @@
-package algorithm;
-
-import static org.junit.Assert.*;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 import Model.InitData;
 import Model.Person;
+import algorithm.BinarySearch;
 
 public class Testing {
 	InitData model = new InitData(1000);
@@ -20,7 +24,7 @@ public class Testing {
 	
 	@Before
 	public void setUpBeforeClass() throws Exception {
-		model.mergeSort();
+		model.mergeSortFirst();
 		personsFirst = model.getData().clone();
 		for(int i=0; i<personsFirst.length; i++){
 			firstNames[i]=personsFirst[i].getFirstName();

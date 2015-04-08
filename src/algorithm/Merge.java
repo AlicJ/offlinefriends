@@ -8,22 +8,22 @@ import Model.Person;
 public class Merge {
 
     @SuppressWarnings("rawtypes")
-    public static void sortMerge (Person[] x ) {
+    public static void mergeSortFirstName (Person[] x ) {
     	Person[] aux = new Person[x.length];
-        sortMerge(x, aux, 0, x.length-1);
+        mergeSortFirstName(x, aux, 0, x.length-1);
     }
 
     @SuppressWarnings("rawtypes")
-    public static void sortMerge (Person[] x, Person[] aux, int lo, int hi) {
+    private static void mergeSortFirstName (Person[] x, Person[] aux, int lo, int hi) {
         if (hi <= lo) return;
         int mid = lo + (hi - lo)/2;
-        sortMerge(x, aux, lo, mid);
-        sortMerge(x, aux, mid+1, hi);
-        merge(x, aux, lo, mid, hi);
+        mergeSortFirstName(x, aux, lo, mid);
+        mergeSortFirstName(x, aux, mid+1, hi);
+        mergeFirstName(x, aux, lo, mid, hi);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static void merge(Person[] a, Person[] aux, int lo, int mid, int hi) {
+    private static void mergeFirstName(Person[] a, Person[] aux, int lo, int mid, int hi) {
         int i = lo, j = mid+1;
 
         for (int k = lo; k <= hi; k++) {
@@ -39,22 +39,22 @@ public class Merge {
     }
     
     @SuppressWarnings("rawtypes")
-    public static void sortMergeLast (Person[] x ) {
+    public static void mergeSortLastName (Person[] x ) {
     	Person[] aux = new Person[x.length];
-    	sortMergeLast(x, aux, 0, x.length-1);
+    	mergeSortLastName(x, aux, 0, x.length-1);
     }
 
     @SuppressWarnings("rawtypes")
-    public static void sortMergeLast (Person[] x, Person[] aux, int lo, int hi) {
+    private static void mergeSortLastName (Person[] x, Person[] aux, int lo, int hi) {
         if (hi <= lo) return;
         int mid = lo + (hi - lo)/2;
-        sortMergeLast(x, aux, lo, mid);
-        sortMergeLast(x, aux, mid+1, hi);
-        mergeLast(x, aux, lo, mid, hi);
+        mergeSortLastName(x, aux, lo, mid);
+        mergeSortLastName(x, aux, mid+1, hi);
+        mergeLastName(x, aux, lo, mid, hi);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static void mergeLast(Person[] a, Person[] aux, int lo, int mid, int hi) {
+    private static void mergeLastName(Person[] a, Person[] aux, int lo, int mid, int hi) {
         int i = lo, j = mid+1;
 
         for (int k = lo; k <= hi; k++) {
