@@ -35,6 +35,10 @@ public class mainFrame extends javax.swing.JFrame {
 	private int currentSize = 500;
 	private String algorithm = "bs";
 	private double searchTime = 0;
+	
+	private int sizeSmall = 500;
+	private int sizeMedium = 2500;
+	private int sizeLarge = 10000;
 
 	/**
 	 * Creates new form mainFrame
@@ -61,18 +65,18 @@ public class mainFrame extends javax.swing.JFrame {
         resultList = new javax.swing.JList();
         title = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        size500 = new javax.swing.JRadioButton();
-        size1000 = new javax.swing.JRadioButton();
-        size2000 = new javax.swing.JRadioButton();
+        sizeSmallBtn = new javax.swing.JRadioButton();
+        sizeMediumBtn = new javax.swing.JRadioButton();
+        sizeLargeBtn = new javax.swing.JRadioButton();
         version = new javax.swing.JLabel();
         credit = new javax.swing.JLabel();
         dictSizeTitle = new javax.swing.JLabel();
         hintText = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        BinarySearch = new javax.swing.JRadioButton();
-        BST = new javax.swing.JRadioButton();
-        TST = new javax.swing.JRadioButton();
+        BinarySearchBtn = new javax.swing.JRadioButton();
+        BSTBtn = new javax.swing.JRadioButton();
+        TSTBtn = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Offline Friends");
@@ -97,28 +101,28 @@ public class mainFrame extends javax.swing.JFrame {
         title.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         title.setText("Offline Friends");
 
-        dictSize.add(size500);
-        size500.setSelected(true);
-        size500.setText("500");
-        size500.addActionListener(new java.awt.event.ActionListener() {
+        dictSize.add(sizeSmallBtn);
+        sizeSmallBtn.setSelected(true);
+        sizeSmallBtn.setText(Integer.toString(sizeSmall));
+        sizeSmallBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                size500ActionPerformed(evt);
+                sizeSmallBtnActionPerformed(evt);
             }
         });
 
-        dictSize.add(size1000);
-        size1000.setText("1000");
-        size1000.addActionListener(new java.awt.event.ActionListener() {
+        dictSize.add(sizeMediumBtn);
+        sizeMediumBtn.setText(Integer.toString(sizeMedium));
+        sizeMediumBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                size1000ActionPerformed(evt);
+                sizeMediumBtnActionPerformed(evt);
             }
         });
 
-        dictSize.add(size2000);
-        size2000.setText("2000");
-        size2000.addActionListener(new java.awt.event.ActionListener() {
+        dictSize.add(sizeLargeBtn);
+        sizeLargeBtn.setText(Integer.toString(sizeLarge));
+        sizeLargeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                size2000ActionPerformed(evt);
+                sizeLargeBtnActionPerformed(evt);
             }
         });
 
@@ -131,34 +135,34 @@ public class mainFrame extends javax.swing.JFrame {
         dictSizeTitle.setText("Dictionary Size");
 
         hintText.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        hintText.setText("Search");
+        hintText.setText("Please enter the name you wish to search");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Algorithm");
 
-        algType.add(BinarySearch);
-        BinarySearch.setSelected(true);
-        BinarySearch.setText("Binary Search");
-        BinarySearch.addActionListener(new java.awt.event.ActionListener() {
+        algType.add(BinarySearchBtn);
+        BinarySearchBtn.setSelected(true);
+        BinarySearchBtn.setText("Binary Search");
+        BinarySearchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BinarySearchActionPerformed(evt);
+                BinarySearchBtnActionPerformed(evt);
             }
         });
 
-        algType.add(BST);
-        BST.setText("BST");
-        BST.setToolTipText("");
-        BST.addActionListener(new java.awt.event.ActionListener() {
+        algType.add(BSTBtn);
+        BSTBtn.setText("BST");
+        BSTBtn.setToolTipText("");
+        BSTBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BSTActionPerformed(evt);
+                BSTBtnActionPerformed(evt);
             }
         });
 
-        algType.add(TST);
-        TST.setText("TST");
-        TST.addActionListener(new java.awt.event.ActionListener() {
+        algType.add(TSTBtn);
+        TSTBtn.setText("TST");
+        TSTBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TSTActionPerformed(evt);
+                TSTBtnActionPerformed(evt);
             }
         });
 
@@ -176,13 +180,13 @@ public class mainFrame extends javax.swing.JFrame {
                                 .addComponent(jSeparator1)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(dictSizeTitle)
-                            .addComponent(size500)
-                            .addComponent(size1000)
-                            .addComponent(size2000)
+                            .addComponent(sizeSmallBtn)
+                            .addComponent(sizeMediumBtn)
+                            .addComponent(sizeLargeBtn)
                             .addComponent(jLabel1)
-                            .addComponent(BinarySearch)
-                            .addComponent(BST)
-                            .addComponent(TST))
+                            .addComponent(BinarySearchBtn)
+                            .addComponent(BSTBtn)
+                            .addComponent(TSTBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(resultPanel)
@@ -216,21 +220,21 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(size500)
+                        .addComponent(sizeSmallBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(size1000)
+                        .addComponent(sizeMediumBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(size2000)
+                        .addComponent(sizeLargeBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BinarySearch)
+                        .addComponent(BinarySearchBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BST)
+                        .addComponent(BSTBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TST))
+                        .addComponent(TSTBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(resultPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -245,9 +249,9 @@ public class mainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 	// change dictionary size to 500
-    private void size500ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size500ActionPerformed
+    private void sizeSmallBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeSmallBtnActionPerformed
 		updatePersonData(500);
-    }//GEN-LAST:event_size500ActionPerformed
+    }//GEN-LAST:event_sizeSmallBtnActionPerformed
 
     private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
 		// TODO add your handling code here:
@@ -255,9 +259,9 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchInputActionPerformed
 
 	// change dictionary size to 1000
-    private void size1000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size1000ActionPerformed
-		updatePersonData(1000);
-    }//GEN-LAST:event_size1000ActionPerformed
+    private void sizeMediumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeMediumBtnActionPerformed
+		updatePersonData(2000);
+    }//GEN-LAST:event_sizeMediumBtnActionPerformed
 
 	// search button action listener
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
@@ -292,25 +296,25 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
 	// change dictionary size to 2000
-    private void size2000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_size2000ActionPerformed
-		updatePersonData(2000);
-    }//GEN-LAST:event_size2000ActionPerformed
+    private void sizeLargeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeLargeBtnActionPerformed
+		updatePersonData(10000);
+    }//GEN-LAST:event_sizeLargeBtnActionPerformed
 
 // change searching algorith to Binary Search
-    private void BinarySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BinarySearchActionPerformed
+    private void BinarySearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BinarySearchBtnActionPerformed
 		algorithm = "bs";
 		updateHintText("Switched to Binary Search");
-    }//GEN-LAST:event_BinarySearchActionPerformed
+    }//GEN-LAST:event_BinarySearchBtnActionPerformed
 	// change searching algorithm to Binary Search Tree
-    private void BSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSTActionPerformed
+    private void BSTBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSTBtnActionPerformed
 		algorithm = "bst";
 		updateHintText("Switched to Binary Search Tree");
-    }//GEN-LAST:event_BSTActionPerformed
+    }//GEN-LAST:event_BSTBtnActionPerformed
 	// change searching algorithm to Ternary Search Tree
-    private void TSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TSTActionPerformed
+    private void TSTBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TSTBtnActionPerformed
 		algorithm = "tst";
 		updateHintText("Switched to Ternary Search Tree");
-    }//GEN-LAST:event_TSTActionPerformed
+    }//GEN-LAST:event_TSTBtnActionPerformed
 
 	// initialize personData (import names from file)
 	// and set the JList with the names from personData
@@ -398,7 +402,7 @@ public class mainFrame extends javax.swing.JFrame {
 		if(!file.exists()){
     		file.createNewFile();
     	}
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getName(), true)));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath(), true)));
 		out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
 		out.close();
 	}
@@ -439,9 +443,9 @@ public class mainFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton BST;
-    private javax.swing.JRadioButton BinarySearch;
-    private javax.swing.JRadioButton TST;
+    private javax.swing.JRadioButton BSTBtn;
+    private javax.swing.JRadioButton BinarySearchBtn;
+    private javax.swing.JRadioButton TSTBtn;
     private javax.swing.ButtonGroup algType;
     private javax.swing.JLabel credit;
     private javax.swing.ButtonGroup dictSize;
@@ -454,9 +458,9 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane resultPanel;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField searchInput;
-    private javax.swing.JRadioButton size1000;
-    private javax.swing.JRadioButton size2000;
-    private javax.swing.JRadioButton size500;
+    private javax.swing.JRadioButton sizeLargeBtn;
+    private javax.swing.JRadioButton sizeMediumBtn;
+    private javax.swing.JRadioButton sizeSmallBtn;
     private javax.swing.JLabel title;
     private javax.swing.JLabel version;
     // End of variables declaration//GEN-END:variables

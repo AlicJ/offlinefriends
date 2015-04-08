@@ -9,75 +9,138 @@ package Model;
  *
  * @author Alic Jiang
  */
+import algorithm.Merge;
 import java.nio.file.*;
 import java.nio.charset.*;
 import java.io.*;
 import java.util.Arrays;
+import java.util.Random;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class GenerateNames {
-	
-	private static String[] first = new String[2000];
-	private static String[] last = new String[2000];
+
+	private static String[] maleFirst = new String[1219];
+	private static String[] femaleFirst = new String[4274];
+	private static String[] last = new String[88798];
+
+	private static String[] names = new String[10000];
 
 	public static void main(String args[]) {
-		// read 1000 male firstnames
+
+		// read all (1219) male firstnames
 		Path infile = Paths.get("src/Model/dist.male.first");
 		try (InputStream in = Files.newInputStream(infile);
 			BufferedReader reader
 			= new BufferedReader(new InputStreamReader(in))) {
 			String line = null;
 			// reading infile
-			for(int i=0; i<1000; i++) {
-				line = reader.readLine();
+			int count = 0;
+			while ((line = reader.readLine()) != null) {
 				String[] pieces = line.split(" ", 2);
-				first[i] = pieces[0];
+				maleFirst[count] = pieces[0];
+				count++;
 			}
 		} catch (IOException x) {
 			System.err.println(x);
 		}
-		// read 1000 female firstnames
+
+		// read all 4275 female firstnames
 		infile = Paths.get("src/Model/dist.female.first");
 		try (InputStream in = Files.newInputStream(infile);
 			BufferedReader reader
 			= new BufferedReader(new InputStreamReader(in))) {
 			String line = null;
 			// reading infile
-			for(int i=1000; i<2000; i++) {
-				line = reader.readLine();
+			line = reader.readLine();
+			int count = 0;
+			while ((line = reader.readLine()) != null) {
 				String[] pieces = line.split(" ", 2);
-				first[i] = pieces[0];
+				femaleFirst[count] = pieces[0];
+				count++;
 			}
 		} catch (IOException x) {
 			System.err.println(x);
 		}
-		// read 2000 lastnames
+
+		// read all 88799 lastnames
 		infile = Paths.get("src/Model/dist.all.last");
 		try (InputStream in = Files.newInputStream(infile);
 			BufferedReader reader
 			= new BufferedReader(new InputStreamReader(in))) {
 			String line = null;
 			// reading infile
-			for(int i=0; i<2000; i++) {
-				line = reader.readLine();
+			line = reader.readLine();
+			int count = 0;
+			while ((line = reader.readLine()) != null) {
 				String[] pieces = line.split(" ", 2);
-				last[i] = pieces[0];
+				last[count] = pieces[0];
+				count++;
 			}
 		} catch (IOException x) {
 			System.err.println(x);
 		}
 
-		// write names to file
+		// check all name arrays do not have null elements
+		for (int i = 0; i < maleFirst.length; i++) {
+			if (maleFirst[i] == null) {
+				System.out.println(i + "null");
+				break;
+			}
+		}
+		System.out.println("male first check complete");
+		// female
+		for (int i = 0; i < femaleFirst.length; i++) {
+			if (femaleFirst[i] == null) {
+				System.out.println(i + "null");
+				break;
+			}
+		}
+		System.out.println("female first check complete");
+		// female
+		for (int i = 0; i < last.length; i++) {
+			if (last[i] == null) {
+				System.out.println(i + "null");
+				break;
+			}
+		}
+		System.out.println("first name check complete");
+
+		// generate 1 million names
+		Random random = new Random();
+		String fn;
+		String ln;
+		for (int i = 0; i < names.length; i++) {
+			if (i%2 == 0) // get a female first name
+				fn = femaleFirst[random.nextInt(femaleFirst.length)];
+			else// get a male first name
+				fn = maleFirst[random.nextInt(maleFirst.length)];
+			// get a last name
+			ln = last[random.nextInt(last.length)];
+			// combine firstname and lastname
+			names[i] = WordUtils.capitalizeFully(fn + " " + ln + "\n");
+		}
+		
+		// check if has null elements
+		for (int i = 0; i < names.length; i++) {
+			if (names[i] == null) {
+				System.out.println(i + "null");
+				break;
+			}
+		}
+		System.out.println("names check complete");
+		
+		// sort the names
+//		Merge.sortMerge(names);
+
+		// write 1 million names to file
 		Path outfile = Paths.get("src/Model/dist.names");
 		Charset charset = Charset.forName("US-ASCII");
-		String s;
 		try (BufferedWriter writer = Files.newBufferedWriter(outfile, charset)) {
-			for (int i=0; i<2000; i++) {
-				// combine firstname and lastname
-				s = first[i] + " " + last[i] + "\n";
-				s = WordUtils.capitalizeFully(s);
+			for (int i = 0; i < names.length; i++) {
+				// get the name
+				String name = names[i];
 				// write to file
-				writer.write(s, 0, s.length());
+				writer.write(name, 0, name.length());
 			}
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
