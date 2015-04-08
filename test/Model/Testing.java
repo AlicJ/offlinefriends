@@ -39,8 +39,8 @@ public class Testing {
 
 	@Test
 	public void test() {
-		System.out.println(Arrays.toString(firstNames));
-		System.out.println(Arrays.toString(lastNames));
+//		System.out.println(Arrays.toString(firstNames));
+//		System.out.println(Arrays.toString(lastNames));
 		String[] personsFirstString = new String[personsFirst.length];
 		String[] personsLastString = new String[personsLast.length];
 		for(int i=0; i<personsFirst.length; i++){
@@ -49,8 +49,8 @@ public class Testing {
 		for(int i=0; i<personsLast.length; i++){
 			personsLastString[i]=personsLast[i].toString();
 		}
-		System.out.println(Arrays.toString(personsFirstString));
-		System.out.println(Arrays.toString(personsLastString));
+//		System.out.println(Arrays.toString(personsFirstString));
+//		System.out.println(Arrays.toString(personsLastString));
 		// Test for Merge Sort
 		// Goes though the list and compares each element to the previousW
 		for(int i=1; i<personsFirst.length; i++){
