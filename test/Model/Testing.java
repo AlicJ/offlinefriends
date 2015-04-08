@@ -24,7 +24,7 @@ public class Testing {
 	
 	@Before
 	public void setUpBeforeClass() throws Exception {
-		model.mergeSort();
+		model.mergeSortFirst();
 		personsFirst = model.getData().clone();
 		for(int i=0; i<personsFirst.length; i++){
 			firstNames[i]=personsFirst[i].getFirstName();
