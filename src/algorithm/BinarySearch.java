@@ -11,8 +11,10 @@ public class BinarySearch {
         while (lo <= hi) {
             // Key is in a[lo..hi] or not present.
             int mid = lo + (hi - lo) / 2;
-            if      (key.compareTo(a[mid])<0 && !a[mid].contains(key)) hi = mid - 1;
-            else if (key.compareTo(a[mid])>0 && !a[mid].contains(key)) lo = mid + 1;
+            if (key.compareTo(a[mid])<0 && !(a[mid].contains(key))) hi = mid -1;
+            else if (key.compareTo(a[mid])>0 && !(a[mid].contains(key))) lo = mid +1;
+            else if (key.compareTo(a[mid])<0 && a[mid].contains("%")) hi = hi - 1;
+            else if (key.compareTo(a[mid])>0 && a[mid].contains("%")) lo = lo + 1;
             else return mid;
         }
         return -1;
