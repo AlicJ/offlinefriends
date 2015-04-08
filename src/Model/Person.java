@@ -33,10 +33,6 @@ public class Person implements Comparable<Person>{
 		return lastName;
 	}
 
-    public int compareTo(String that){
-        return this.toString().compareTo(that);
-    }
-
     public String toString(){
         return this.firstName + " " + this.lastName;
     }
@@ -44,5 +40,13 @@ public class Person implements Comparable<Person>{
 	@Override
 	public int compareTo(Person that) {
 		return this.toString().compareTo(that.toString());
+	}
+	
+	public int compareToFirst(Person that) {
+		return this.getFirstName().compareTo(that.getFirstName());
+	}
+	
+	public int compareToLast(Person that) {
+		return this.getLastName().compareTo(that.getLastName());
 	}
 }
