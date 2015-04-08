@@ -43,7 +43,7 @@ public class Person implements Comparable<Person>{
 	}
 	
 	public int compareToFirst(Person that) {
-		return this.getFirstName().compareTo(that.getFirstName());
+		return this.toString().compareTo(that.toString());
 	}
 	
 	public int compareToLast(Person that) {

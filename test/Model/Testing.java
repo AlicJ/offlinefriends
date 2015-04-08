@@ -86,7 +86,7 @@ public class Testing {
 		//repeat until no results
 		while(rank!=-1){
 			//System.out.println(Arrays.toString(temp));
-			rank = BinarySearch.rank("Jon", temp);
+			rank = BinarySearch.rank("Al", temp);
 			if (rank>=0){
 				//System.out.println(rank + " | " + personsFirst[rank]);
 				firstNameRanks.add(rank);
@@ -112,7 +112,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		do{
-			rank = BinarySearch.rank("Jon", temp);
+			rank = BinarySearch.rank("Al", temp);
 			if (rank>=0){
 				lastNameRanks.add(rank);
 				temp[rank] = "";
@@ -142,7 +142,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempBST.get("Jon");
+			rank = (Integer) tempBST.get("Al");
 			if (rank != null){
 				firstNameRanks.add(rank);
 			}
@@ -165,7 +165,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempBST.get("Jon");
+			rank = (Integer) tempBST.get("Al");
 			if (rank != null){
 				lastNameRanks.add(rank);
 			}
