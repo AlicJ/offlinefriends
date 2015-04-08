@@ -21,6 +21,8 @@ import org.apache.commons.lang3.time.StopWatch;
  */
 public class InitData {
 	public Person[] personData;
+	private final int MAX = 10000;
+	private int interval = 1;
 	
 	public InitData() {
 		initialize(500);
@@ -30,10 +32,12 @@ public class InitData {
 		initialize(len);
 	}
 	
-	public void initialize(int numOfPerson) {
+	private void initialize(int numOfPerson) {
 		// initialize personData with the write length
 		personData = new Person[numOfPerson];
-		
+		interval = MAX/numOfPerson;
+		System.out.println(interval);
+				
 		Path infile = Paths.get("src/Model/dist.names");
 		try (InputStream in = Files.newInputStream(infile);
 			BufferedReader reader
@@ -41,7 +45,9 @@ public class InitData {
 			String line = null;
 			// reading infile
 			for(int i=0; i<numOfPerson; i++) {
-				line = reader.readLine();
+				// use interval to minimize duplication on smaller sizes
+				for (int j=0; j<interval; j++)
+					line = reader.readLine();
 				String[] pieces = line.split(" ", 2);
 				personData[i] = new Person(pieces[0], pieces[1]);
 			}

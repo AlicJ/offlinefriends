@@ -23,7 +23,7 @@ public class GenerateNames {
 	private static String[] femaleFirst = new String[4274];
 	private static String[] last = new String[88798];
 
-	private static String[] names = new String[1000000];
+	private static String[] names = new String[10000];
 
 	public static void main(String args[]) {
 
