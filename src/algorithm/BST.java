@@ -6,11 +6,16 @@ package algorithm;
 
 import java.util.NoSuchElementException;
 
-public class BST<Key extends Comparable<Key>, Value> {
-	
+public class BST<Key extends String, Value> {
     private Node root;             // root of BST
 
-    private class Node {
+    public BST(BST<Key,Value> that){
+    	this.root=that.root;
+    }
+    
+    public BST() {}
+
+	private class Node {
         private Key key;           // sorted by key
         private Value val;         // associated data
         private Node left, right;  // left and right subtrees
@@ -52,9 +57,13 @@ public class BST<Key extends Comparable<Key>, Value> {
     private Value get(Node x, Key key) {
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
-        if      (cmp < 0) return get(x.left, key);
-        else if (cmp > 0) return get(x.right, key);
-        else              return x.val;
+        if      (cmp < 0 && !x.key.contains(key)) return get(x.left, key);
+        else if (cmp > 0 && !x.key.contains(key)) return get(x.right, key);
+        else{
+        	Value ret = x.val;
+        	delete(x.key);
+        	return ret;
+        }
     }
 
     public void put(Key key, Value val) {

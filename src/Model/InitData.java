@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.Arrays;
-import org.apache.commons.lang3.time.StopWatch;
 
 /**
  *
@@ -21,8 +20,6 @@ import org.apache.commons.lang3.time.StopWatch;
  */
 public class InitData {
 	public Person[] personData;
-	private final int MAX = 10000;
-	private int interval = 1;
 	
 	public InitData() {
 		initialize(500);
@@ -32,12 +29,10 @@ public class InitData {
 		initialize(len);
 	}
 	
-	private void initialize(int numOfPerson) {
+	public void initialize(int numOfPerson) {
 		// initialize personData with the write length
 		personData = new Person[numOfPerson];
-		interval = MAX/numOfPerson;
-		System.out.println(interval);
-				
+		
 		Path infile = Paths.get("src/Model/dist.names");
 		try (InputStream in = Files.newInputStream(infile);
 			BufferedReader reader
@@ -45,44 +40,34 @@ public class InitData {
 			String line = null;
 			// reading infile
 			for(int i=0; i<numOfPerson; i++) {
-				// use interval to minimize duplication on smaller sizes
-				for (int j=0; j<interval; j++)
-					line = reader.readLine();
+				line = reader.readLine();
 				String[] pieces = line.split(" ", 2);
 				personData[i] = new Person(pieces[0], pieces[1]);
 			}
 		} catch (IOException x) {
 			System.err.println(x);
 		}
-		// sort after reading names
-		Merge.mergeSortFirstName(personData);
 	}
 	
 	public Person[] getData() {
 		return personData;
 	}
 	
-	public void mergeSortFirst() {
-		Merge.mergeSortFirstName(personData);
+	public void mergeSort() {
+		Merge.sortMerge(personData);
 	}
 	
 	public void mergeSortLast() {
-		Merge.mergeSortLastName(personData);
+		Merge.sortMergeLast(personData);
 	}
 	
 	public static void main (String[] args) {
 		InitData model = new InitData(10);
 		Person[] data = model.getData();
-//		System.out.println(Arrays.toString(model.getData()));
-		// merge sort
-		StopWatch sw = new StopWatch();
-		sw.start();
-		double startTime = sw.getTime();
-		model.mergeSortFirst();
-		double runTime = sw.getTime() - startTime;
-		sw.stop();
-		System.out.println(runTime);
-//		System.out.println(Arrays.toString(model.getData()));
+		System.out.println(Arrays.toString(model.getData()));
+		
+		model.mergeSort();
+		System.out.println(Arrays.toString(model.getData()));
 		
 	}
 }
