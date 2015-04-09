@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.*;
-import java.util.Arrays;
 import org.apache.commons.lang3.time.StopWatch;
 
 /**
@@ -72,7 +71,8 @@ public class InitData {
 	
 	public static void main (String[] args) {
 		InitData model = new InitData(10);
-		Person[] data = model.getData();
+		Person[] data;
+		data = model.getData();
 //		System.out.println(Arrays.toString(model.getData()));
 		// merge sort
 		StopWatch sw = new StopWatch();

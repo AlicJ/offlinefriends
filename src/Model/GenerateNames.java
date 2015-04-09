@@ -9,21 +9,19 @@ package Model;
  *
  * @author Alic Jiang
  */
-import algorithm.Merge;
 import java.nio.file.*;
 import java.nio.charset.*;
 import java.io.*;
-import java.util.Arrays;
 import java.util.Random;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class GenerateNames {
 
-	private static String[] maleFirst = new String[1219];
-	private static String[] femaleFirst = new String[4274];
-	private static String[] last = new String[88798];
+	private static final String[] maleFirst = new String[1219];
+	private static final String[] femaleFirst = new String[4274];
+	private static final String[] last = new String[88798];
 
-	private static String[] names = new String[10000];
+	private static final String[] names = new String[10000];
 
 	public static void main(String args[]) {
 
@@ -51,7 +49,6 @@ public class GenerateNames {
 			= new BufferedReader(new InputStreamReader(in))) {
 			String line = null;
 			// reading infile
-			line = reader.readLine();
 			int count = 0;
 			while ((line = reader.readLine()) != null) {
 				String[] pieces = line.split(" ", 2);
@@ -69,7 +66,6 @@ public class GenerateNames {
 			= new BufferedReader(new InputStreamReader(in))) {
 			String line = null;
 			// reading infile
-			line = reader.readLine();
 			int count = 0;
 			while ((line = reader.readLine()) != null) {
 				String[] pieces = line.split(" ", 2);
@@ -136,9 +132,7 @@ public class GenerateNames {
 		Path outfile = Paths.get("src/Model/dist.names");
 		Charset charset = Charset.forName("US-ASCII");
 		try (BufferedWriter writer = Files.newBufferedWriter(outfile, charset)) {
-			for (int i = 0; i < names.length; i++) {
-				// get the name
-				String name = names[i];
+			for (String name : names) {
 				// write to file
 				writer.write(name, 0, name.length());
 			}

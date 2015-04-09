@@ -378,8 +378,10 @@ public class mainFrame extends javax.swing.JFrame {
 		double startTime;
 		switch (algorithm) {
 			case "bs":
-				String[] firstNames = new String[personsFirst.length];
-				String[] lastNames = new String[personsLast.length];
+				String[] firstNames;
+				firstNames = new String[personsFirst.length];
+				String[] lastNames;
+				lastNames = new String[personsLast.length];
 				
 				personData.mergeSortFirst();
 				personsFirst = personData.getData().clone();

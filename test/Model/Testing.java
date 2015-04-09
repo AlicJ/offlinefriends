@@ -8,8 +8,6 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.InitData;
-import Model.Person;
 import algorithm.BST;
 import algorithm.BinarySearch;
 
@@ -19,8 +17,8 @@ public class Testing {
 	Person[] personsLast = new Person[1000];
 	String[] firstNames = new String[personsFirst.length];
 	String[] lastNames = new String[personsLast.length];
-	BST<String, Integer> firstNamesBST = new BST<String, Integer> ();
-	BST<String, Integer> lastNamesBST = new BST<String, Integer> ();
+	BST<String, Integer> firstNamesBST = new BST<> ();
+	BST<String, Integer> lastNamesBST = new BST<> ();
 	
 	@Before
 	public void setUpBeforeClass() throws Exception {
@@ -77,7 +75,7 @@ public class Testing {
 		System.out.println("BINARY SEARCH RESULTS");
 		System.out.println("_______________________________");
 		//initialize Binary Search for First Names
-		ArrayList<Integer> firstNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> firstNameRanks = new ArrayList<> ();
 		Integer rank = -2;		
 		String[] temp = firstNames.clone();
 		
@@ -99,12 +97,12 @@ public class Testing {
 		for (int i=0; i<firstNameRanks.size(); i++){
 			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
 		}
-		for (int i=0; i<firstNameResults.length; i++){
-			System.out.println(firstNameResults[i].toString());
+		for (Person firstNameResult : firstNameResults) {
+			System.out.println(firstNameResult.toString());
 		}
 		
 		//initialize Binary Search for Last Names
-		ArrayList<Integer> lastNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> lastNameRanks = new ArrayList<> ();
 		rank = -2;		
 		temp = lastNames.clone();
 		
@@ -123,8 +121,8 @@ public class Testing {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
+		for (Person lastNameResult : lastNameResults) {
+			System.out.println(lastNameResult.toString());
 		}
 		
 		/**
@@ -134,7 +132,7 @@ public class Testing {
 		System.out.println("BINARY SEARCH TREE RESULTS");
 		System.out.println("_______________________________");
 		//initialize Binary Search Tree for First Names
-		firstNameRanks = new ArrayList<Integer> ();
+		firstNameRanks = new ArrayList<> ();
 		rank = -2;		
 		BST tempBST = new BST(firstNamesBST);
 		
@@ -152,12 +150,12 @@ public class Testing {
 		for (int i=0; i<firstNameRanks.size(); i++){
 			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
 		}
-		for (int i=0; i<firstNameResults.length; i++){
-			System.out.println(firstNameResults[i].toString());
+		for (Person firstNameResult : firstNameResults) {
+			System.out.println(firstNameResult.toString());
 		}
 		
 		//initialize Binary Search Tree for Last Names
-		lastNameRanks = new ArrayList<Integer> ();
+		lastNameRanks = new ArrayList<> ();
 		rank = -2;		
 		tempBST = new BST(lastNamesBST);
 		
@@ -175,8 +173,8 @@ public class Testing {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
+		for (Person lastNameResult : lastNameResults) {
+			System.out.println(lastNameResult.toString());
 		}
 		
 		

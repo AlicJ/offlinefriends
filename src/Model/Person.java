@@ -33,6 +33,7 @@ public class Person implements Comparable<Person>{
 		return lastName;
 	}
 
+	@Override
     public String toString(){
         return this.firstName + " " + this.lastName;
     }
