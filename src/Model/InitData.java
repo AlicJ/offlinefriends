@@ -36,7 +36,7 @@ public class InitData {
 		// initialize personData with the write length
 		personData = new Person[numOfPerson];
 		interval = MAX/numOfPerson;
-		System.out.println(interval);
+		//System.out.println(interval);
 				
 		Path infile = Paths.get("src/Model/dist.names");
 		try (InputStream in = Files.newInputStream(infile);
