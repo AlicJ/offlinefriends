@@ -133,7 +133,7 @@ public class Testing {
 		System.out.println();
 		System.out.println("BINARY SEARCH TREE RESULTS");
 		System.out.println("_______________________________");
-		//initialize Binary Search for First Names
+		//initialize Binary Search Tree for First Names
 		firstNameRanks = new ArrayList<Integer> ();
 		rank = -2;		
 		BST tempBST = new BST(firstNamesBST);
@@ -156,7 +156,7 @@ public class Testing {
 			System.out.println(firstNameResults[i].toString());
 		}
 		
-		//initialize Binary Search for Last Names
+		//initialize Binary Search Tree for Last Names
 		lastNameRanks = new ArrayList<Integer> ();
 		rank = -2;		
 		tempBST = new BST(lastNamesBST);

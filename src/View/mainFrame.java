@@ -2,8 +2,12 @@ package View;
 
 import Model.InitData;
 import Model.Person;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+
 import javax.swing.ListModel;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedWriter;
@@ -13,9 +17,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.*;
 import javax.swing.event.*;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.StopWatch;
+
+import algorithm.BST;
 
 // https://www.youtube.com/watch?v=fJxF-uWD7aU
 
@@ -258,9 +267,9 @@ public class mainFrame extends javax.swing.JFrame {
 		searchBtnActionPerformed(evt);
     }//GEN-LAST:event_searchInputActionPerformed
 
-	// change dictionary size to 1000
+	// change dictionary size to 2500
     private void sizeMediumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeMediumBtnActionPerformed
-		updatePersonData(2000);
+		updatePersonData(2500);
     }//GEN-LAST:event_sizeMediumBtnActionPerformed
 
 	// search button action listener
@@ -295,7 +304,7 @@ public class mainFrame extends javax.swing.JFrame {
 		updateResultList(searchResult);
     }//GEN-LAST:event_searchBtnActionPerformed
 
-	// change dictionary size to 2000
+	// change dictionary size to 10000
     private void sizeLargeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeLargeBtnActionPerformed
 		updatePersonData(10000);
     }//GEN-LAST:event_sizeLargeBtnActionPerformed
@@ -368,22 +377,98 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// searching algorithm
 	private Person[] search(String input) {
+		Person[] personsFirst = new Person[currentSize];
+		Person[] personsLast = new Person[currentSize];
+		
+		
 		Person[] result = new Person[0];
 		StopWatch sw = new StopWatch();
 		sw.start();
 		double startTime;
 		switch (algorithm) {
 			case "bs":
+				String[] firstNames = new String[personsFirst.length];
+				String[] lastNames = new String[personsLast.length];
+				
+				personData.mergeSortFirst();
+				personsFirst = personData.getData().clone();
+				for(int i=0; i<personsFirst.length; i++){
+					firstNames[i]=personsFirst[i].getFirstName();
+				}
+				
+				personData.mergeSortLast();
+				personsLast = personData.getData().clone();
+				for(int i=0; i<personsLast.length; i++){
+					lastNames[i]=personsLast[i].getLastName();
+				}
+				
+				
 				startTime = sw.getTime();
 				// implement binary search
 				searchTime = sw.getTime() - startTime;
 				result = new Person[0];
 				break;
 			case "bst":
+				//initialize bst				
+				BST<String, Integer> firstNamesBST = new BST<String, Integer> ();
+				BST<String, Integer> lastNamesBST = new BST<String, Integer> ();
+				
+				personData.mergeSortFirst();
+				personsFirst = personData.getData().clone();
+				for(int i=0; i<personsFirst.length; i++){
+					firstNamesBST.put(personsFirst[i].getFirstName(), i);
+				}
+				
+				personData.mergeSortLast();
+				personsLast = personData.getData().clone();
+				for(int i=0; i<personsLast.length; i++){
+					lastNamesBST.put(personsLast[i].getLastName(), i);
+				}
+				
 				startTime = sw.getTime();
-				// implement binary search tree
+				
+				//initialize Binary Search Tree for First Names
+				ArrayList<Integer> firstNameRanks = new ArrayList<Integer> ();
+				Integer rank = -2;		
+				BST tempBST = new BST(firstNamesBST);
+				
+				//searches for name
+				//if name is found, record the rank, and remove the name from temp array
+				//repeat until no results
+				while(rank != null){
+					rank = (Integer) tempBST.get(input);
+					if (rank != null){
+						firstNameRanks.add(rank);
+					}
+				}
+					
+				Person[] firstNameResults = new Person[firstNameRanks.size()];
+				for (int i=0; i<firstNameRanks.size(); i++){
+					firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
+				}
+				
+				//initialize Binary Search Tree for Last Names
+				ArrayList<Integer> lastNameRanks = new ArrayList<Integer> ();
+				rank = -2;		
+				tempBST = new BST(lastNamesBST);
+				
+				//searches for name
+				//if name is found, record the rank, and remove the name from temp array
+				//repeat until no results
+				while(rank != null){
+					rank = (Integer) tempBST.get(input);
+					if (rank != null){
+						lastNameRanks.add(rank);
+					}
+				}
+					
+				Person[] lastNameResults = new Person[lastNameRanks.size()];
+				for (int i=0; i<lastNameRanks.size(); i++){
+					lastNameResults[i] = personsLast[lastNameRanks.get(i)];
+				}
+
 				searchTime = sw.getTime() - startTime;
-				result = new Person[0];
+				result = ArrayUtils.addAll(firstNameResults,lastNameResults);
 				break;
 			case "tst":
 				startTime = sw.getTime();
