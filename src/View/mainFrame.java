@@ -4,12 +4,8 @@ import Model.InitData;
 import Model.Person;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import javax.swing.ListModel;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,14 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
 import algorithm.BST;
-
-// https://www.youtube.com/watch?v=fJxF-uWD7aU
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,9 +38,9 @@ public class mainFrame extends javax.swing.JFrame {
 	private String algorithm = "bs";
 	private double searchTime = 0;
 	
-	private int sizeSmall = 500;
-	private int sizeMedium = 2500;
-	private int sizeLarge = 10000;
+	private final int sizeSmall = 500;
+	private final int sizeMedium = 1000;
+	private final int sizeLarge = 2000;
 
 	/**
 	 * Creates new form mainFrame
@@ -259,7 +252,7 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// change dictionary size to 500
     private void sizeSmallBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeSmallBtnActionPerformed
-		updatePersonData(500);
+		updatePersonData(sizeSmall);
     }//GEN-LAST:event_sizeSmallBtnActionPerformed
 
     private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
@@ -269,7 +262,7 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// change dictionary size to 2500
     private void sizeMediumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeMediumBtnActionPerformed
-		updatePersonData(2500);
+		updatePersonData(sizeMedium);
     }//GEN-LAST:event_sizeMediumBtnActionPerformed
 
 	// search button action listener
@@ -306,7 +299,7 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// change dictionary size to 10000
     private void sizeLargeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeLargeBtnActionPerformed
-		updatePersonData(10000);
+		updatePersonData(sizeLarge);
     }//GEN-LAST:event_sizeLargeBtnActionPerformed
 
 // change searching algorith to Binary Search
@@ -334,9 +327,7 @@ public class mainFrame extends javax.swing.JFrame {
 
 	// update the personData variable to the desired size
 	private void updatePersonData(int size) {
-		if (currentSize == size) {
-			return;
-		} else {
+		if (currentSize != size) {
 			updateHintText("Importing dictionary, please stand by ...");
 			currentSize = size;
 			// initilize stop watch to get time comsumed for importing dictionary
@@ -358,8 +349,8 @@ public class mainFrame extends javax.swing.JFrame {
 	// update the personListModel variable, prepare to be displayed
 	private DefaultListModel setListModel(Person[] pData) {
 		DefaultListModel listModel = new DefaultListModel();
-		for (int i = 0; i < pData.length; i++) {
-			listModel.addElement(pData[i]);
+		for (Person pData1 : pData) {
+			listModel.addElement(pData1);
 		}
 		return listModel;
 	}
@@ -410,8 +401,8 @@ public class mainFrame extends javax.swing.JFrame {
 				break;
 			case "bst":
 				//initialize bst				
-				BST<String, Integer> firstNamesBST = new BST<String, Integer> ();
-				BST<String, Integer> lastNamesBST = new BST<String, Integer> ();
+				BST<String, Integer> firstNamesBST = new BST<> ();
+				BST<String, Integer> lastNamesBST = new BST<> ();
 				
 				personData.mergeSortFirst();
 				personsFirst = personData.getData().clone();
@@ -428,7 +419,7 @@ public class mainFrame extends javax.swing.JFrame {
 				startTime = sw.getTime();
 				
 				//initialize Binary Search Tree for First Names
-				ArrayList<Integer> firstNameRanks = new ArrayList<Integer> ();
+				ArrayList<Integer> firstNameRanks = new ArrayList<> ();
 				Integer rank = -2;		
 				BST tempBST = new BST(firstNamesBST);
 				
@@ -448,7 +439,7 @@ public class mainFrame extends javax.swing.JFrame {
 				}
 				
 				//initialize Binary Search Tree for Last Names
-				ArrayList<Integer> lastNameRanks = new ArrayList<Integer> ();
+				ArrayList<Integer> lastNameRanks = new ArrayList<> ();
 				rank = -2;		
 				tempBST = new BST(lastNamesBST);
 				
@@ -487,9 +478,9 @@ public class mainFrame extends javax.swing.JFrame {
 		if(!file.exists()){
     		file.createNewFile();
     	}
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath(), true)));
-		out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
-		out.close();
+		try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath(), true)))) {
+			out.println(searchTerm + "," + Long.toString(Math.round(searchTime)));
+		}
 	}
 
 	/**
@@ -508,19 +499,14 @@ public class mainFrame extends javax.swing.JFrame {
 					break;
 				}
 			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
 			java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				new mainFrame().setVisible(true);
 			}
