@@ -52,7 +52,9 @@ public class RedBlackBST<Key extends String, Value> {
     }
 
     // value associated with the given key; null if no such key
-    public Value get(Key key) { return get(root, key); }
+    public Value get(Key key) { 
+    	return get(root, key); 
+    }
 
     // value associated with the given key in subtree rooted at x; null if no such key
     private Value get(Node x, Key key) {
