@@ -421,7 +421,7 @@ public class mainFrame extends javax.swing.JFrame {
 				//if name is found, record the rank, and remove the name from temp tree
 				//repeat until no results
 				while(rank != null){
-					rank = (Integer) tempBST.get(input);
+					rank = (Integer) tempBST.get(upperCase(input));
 					if (rank != null){
 						firstNameRanks.add(rank);
 					}
@@ -441,7 +441,7 @@ public class mainFrame extends javax.swing.JFrame {
 				//if name is found, record the rank, and remove the name from temp tree
 				//repeat until no results
 				while(rank != null){
-					rank = (Integer) tempBST.get(input);
+					rank = (Integer) tempBST.get(upperCase(input));
 					if (rank != null){
 						lastNameRanks.add(rank);
 					}
@@ -484,7 +484,7 @@ public class mainFrame extends javax.swing.JFrame {
 				//if name is found, record the rank, and remove the name from temp tree
 				//repeat until no results
 				while(rank != null){
-					rank = (Integer) tempRBBST.get(input);
+					rank = (Integer) tempRBBST.get(upperCase(input));
 					if (rank != null){
 						firstNameRanks.add(rank);
 					}
@@ -504,7 +504,7 @@ public class mainFrame extends javax.swing.JFrame {
 				//if name is found, record the rank, and remove the name from temp array
 				//repeat until no results
 				while(rank != null){
-					rank = (Integer) tempRBBST.get(input);
+					rank = (Integer) tempRBBST.get(upperCase(input));
 					if (rank != null){
 						lastNameRanks.add(rank);
 					}
@@ -522,6 +522,13 @@ public class mainFrame extends javax.swing.JFrame {
 		}
 		sw.stop();
 		return result;
+	}
+	
+	String upperCase (String inputVal) {
+	    if (inputVal.length() == 0) return "";
+	    if (inputVal.length() == 1) return inputVal.toUpperCase();
+	    return inputVal.substring(0,1).toUpperCase()
+	        + inputVal.substring(1).toLowerCase();
 	}
 
 	// write search result to file
