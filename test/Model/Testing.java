@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import algorithm.BST;
 import algorithm.BinarySearch;
+import algorithm.LinearSearch;
 
 public class Testing {
 	InitData model = new InitData(1000);
@@ -42,31 +43,45 @@ public class Testing {
 		// Arrays Debug
 		System.out.println("DEBUG");
 		System.out.println("_______________________________");
-		System.out.println(Arrays.toString(firstNames));
-		System.out.println(Arrays.toString(lastNames));
-		String[] personsFirstString = new String[personsFirst.length];
-		String[] personsLastString = new String[personsLast.length];
-		for(int i=0; i<personsFirst.length; i++){
-			personsFirstString[i]=personsFirst[i].toString();
-		}
-		for(int i=0; i<personsLast.length; i++){
-			personsLastString[i]=personsLast[i].toString();
-		}
-		System.out.println(Arrays.toString(personsFirstString));
-		System.out.println(Arrays.toString(personsLastString));
+		System.out.println(Arrays.toString(model.getData()));
+//		System.out.println(Arrays.toString(firstNames));
+//		System.out.println(Arrays.toString(lastNames));
+//		String[] personsFirstString = new String[personsFirst.length];
+//		String[] personsLastString = new String[personsLast.length];
+//		for(int i=0; i<personsFirst.length; i++){
+//			personsFirstString[i]=personsFirst[i].toString();
+//		}
+//		for(int i=0; i<personsLast.length; i++){
+//			personsLastString[i]=personsLast[i].toString();
+//		}
+//		System.out.println(Arrays.toString(personsFirstString));
+//		System.out.println(Arrays.toString(personsLastString));
+//		
+//		/**
+//		 * MERGE SORT
+//		 */
+//		
+//		// Test for Merge Sort
+//		// Goes though the list and compares each element to the previousW
+//		for(int i=1; i<personsFirst.length; i++){
+//			assertTrue(personsFirst[i].compareTo(personsFirst[i-1])>=0);
+//		}
+//		for(int i=1; i<personsLast.length; i++){
+//			assertTrue(personsLast[i].compareToLast(personsLast[i-1])>=0);
+//		}
+		
 		
 		/**
-		 * MERGE SORT
+		 * LINEAR SEARCH
 		 */
-		
-		// Test for Merge Sort
-		// Goes though the list and compares each element to the previousW
-		for(int i=1; i<personsFirst.length; i++){
-			assertTrue(personsFirst[i].compareTo(personsFirst[i-1])>=0);
-		}
-		for(int i=1; i<personsLast.length; i++){
-			assertTrue(personsLast[i].compareToLast(personsLast[i-1])>=0);
-		}
+		System.out.println();
+		System.out.println("LINEAR SEARCH RESULTS");
+		System.out.println("_______________________________");
+		Person[] data = model.getData();
+		Person[] result;
+		result = LinearSearch.search(data, "ali");
+		System.out.println(result.length);
+		System.out.println(Arrays.toString(result));
 		
 		/**
 		 * BINARY SEARCH

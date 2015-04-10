@@ -19,7 +19,7 @@ import org.apache.commons.lang3.time.StopWatch;
  * @author Alic Jiang
  */
 public class InitData {
-	public Person[] personData;
+	private Person[] personData;
 	private final int MAX = 10000;
 	private int interval = 1;
 	
@@ -68,7 +68,7 @@ public class InitData {
 	public void mergeSortLast() {
 		Merge.mergeSortLastName(personData);
 	}
-	
+		
 	public static void main (String[] args) {
 		InitData model = new InitData(10);
 		Person[] data;
