@@ -86,7 +86,7 @@ public class Testing {
 		Person[] data = model.getData();
 		System.out.println(Arrays.toString(data));
 		Person[] result;
-		result = LinearSearch.search(data, "ali");
+		result = LinearSearch.search(data, "al");
 		System.out.println(result.length);
 		System.out.println(Arrays.toString(result));
 		
@@ -106,7 +106,7 @@ public class Testing {
 		//repeat until no results
 		while(rank!=-1){
 			//System.out.println(Arrays.toString(temp));
-			rank = BinarySearch.rank("Al", temp);
+			rank = BinarySearch.rank("al", temp);
 			if (rank>=0){
 				//System.out.println(rank + " | " + personsFirst[rank]);
 				firstNameRanks.add(rank);
@@ -132,7 +132,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		do{
-			rank = BinarySearch.rank("Al", temp);
+			rank = BinarySearch.rank("al", temp);
 			if (rank>=0){
 				lastNameRanks.add(rank);
 				temp[rank] = "";
@@ -162,7 +162,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempBST.get("Al");
+			rank = (Integer) tempBST.get("al");
 			if (rank != null){
 				firstNameRanks.add(rank);
 			}
@@ -185,7 +185,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempBST.get("Al");
+			rank = (Integer) tempBST.get("al");
 			if (rank != null){
 				lastNameRanks.add(rank);
 			}
@@ -214,7 +214,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempRBBST.get("Al");
+			rank = (Integer) tempRBBST.get("al");
 			if (rank != null){
 				firstNameRanks.add(rank);
 			}
@@ -237,7 +237,7 @@ public class Testing {
 		//if name is found, record the rank, and remove the name from temp array
 		//repeat until no results
 		while(rank != null){
-			rank = (Integer) tempRBBST.get("Al");
+			rank = (Integer) tempRBBST.get("al");
 			if (rank != null){
 				lastNameRanks.add(rank);
 			}

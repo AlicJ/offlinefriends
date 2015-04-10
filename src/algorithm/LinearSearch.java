@@ -6,6 +6,7 @@
 
 package algorithm;
 import Model.Person;
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -17,12 +18,19 @@ public class LinearSearch {
 		Stack<Person> stack = new Stack();
 		input = input.toLowerCase();
 		int len = input.length();
+		System.out.println(len);
 		for (Person person : data) {
 			String fn = person.getFirstName().toLowerCase();
 			String ln = person.getLastName().toLowerCase();
-			if (fn.length() < len || ln.length() < len)
-				continue;
-			if(fn.substring(0,len).equals(input) || ln.substring(0,len).equals(input))
+			System.out.println(fn + " " + ln);
+//			if (fn.length() < len || ln.length() < len) {
+//				System.out.println("continue");
+//				continue;
+//			}
+			// if the name is shorter than the input, make it null, otherwise compare its substring
+			if( (fn.length() < len ? (input) == null : fn.substring(0,len).equals(input))
+				||
+				(ln.length() < len ? (input) == null : ln.substring(0,len).equals(input)))
 				stack.push(person);
 		}
 		Person[] result = new Person[stack.size()];
@@ -31,4 +39,10 @@ public class LinearSearch {
 		}
 		return result;
 	} 
+	
+	public static void main (String[] args) {
+		Person[] data = {new Person("sol", "Allender")};
+		Person[] result = search(data, "allen");
+		System.out.println(Arrays.toString(result));
+	}
 }
