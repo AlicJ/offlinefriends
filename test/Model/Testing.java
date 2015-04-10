@@ -12,6 +12,7 @@ import Model.InitData;
 import Model.Person;
 import algorithm.BST;
 import algorithm.BinarySearch;
+import algorithm.LinearSearch;
 import algorithm.RedBlackBST;
 
 public class Testing {
@@ -49,8 +50,8 @@ public class Testing {
 		// Arrays Debug
 		System.out.println("DEBUG");
 		System.out.println("_______________________________");
-		System.out.println(Arrays.toString(firstNames));
-		System.out.println(Arrays.toString(lastNames));
+//		System.out.println(Arrays.toString(firstNames));
+//		System.out.println(Arrays.toString(lastNames));
 		String[] personsFirstString = new String[personsFirst.length];
 		String[] personsLastString = new String[personsLast.length];
 		for(int i=0; i<personsFirst.length; i++){
@@ -59,8 +60,8 @@ public class Testing {
 		for(int i=0; i<personsLast.length; i++){
 			personsLastString[i]=personsLast[i].toString();
 		}
-		System.out.println(Arrays.toString(personsFirstString));
-		System.out.println(Arrays.toString(personsLastString));
+//		System.out.println(Arrays.toString(personsFirstString));
+//		System.out.println(Arrays.toString(personsLastString));
 		
 		/**
 		 * MERGE SORT
@@ -75,10 +76,24 @@ public class Testing {
 			assertTrue(personsLast[i].compareToLast(personsLast[i-1])>=0);
 		}
 		
+		 /**
+		 * LINEAR SEARCH
+		 */
+		
+		System.out.println();
+		System.out.println("LINEAR SEARCH RESULTS");
+		System.out.println("_______________________________");
+		Person[] data = model.getData();
+		System.out.println(Arrays.toString(data));
+		Person[] result;
+		result = LinearSearch.search(data, "ali");
+		System.out.println(result.length);
+		System.out.println(Arrays.toString(result));
+		
 		/**
 		 * BINARY SEARCH
 		 */
-		System.out.println();
+//		System.out.println();
 		System.out.println("BINARY SEARCH RESULTS");
 		System.out.println("_______________________________");
 		//initialize Binary Search for First Names
@@ -128,9 +143,9 @@ public class Testing {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
-		}
+//		for (int i=0; i<lastNameResults.length; i++){
+//			System.out.println(lastNameResults[i].toString());
+//		}
 		
 		/**
 		 *  BINARY SEARCH TREE

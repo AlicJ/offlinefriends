@@ -16,10 +16,13 @@ public class LinearSearch {
 	public static Person[] search (Person[] data, String input) {
 		Stack<Person> stack = new Stack();
 		input = input.toLowerCase();
+		int len = input.length();
 		for (Person person : data) {
 			String fn = person.getFirstName().toLowerCase();
 			String ln = person.getLastName().toLowerCase();
-			if(fn.contains(input) || ln.contains(input))
+			if (fn.length() < len || ln.length() < len)
+				continue;
+			if(fn.substring(0,len).equals(input) || ln.substring(0,len).equals(input))
 				stack.push(person);
 		}
 		Person[] result = new Person[stack.size()];
