@@ -18,11 +18,9 @@ public class LinearSearch {
 		Stack<Person> stack = new Stack();
 		input = input.toLowerCase();
 		int len = input.length();
-		System.out.println(len);
 		for (Person person : data) {
 			String fn = person.getFirstName().toLowerCase();
 			String ln = person.getLastName().toLowerCase();
-			System.out.println(fn + " " + ln);
 //			if (fn.length() < len || ln.length() < len) {
 //				System.out.println("continue");
 //				continue;

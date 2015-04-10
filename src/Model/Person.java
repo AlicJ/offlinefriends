@@ -43,6 +43,10 @@ public class Person implements Comparable<Person>{
 		return this.toString().compareTo(that.toString());
 	}
 	
+	public boolean equals(Person that){
+		return this.toString().equals(that.toString());
+	}
+	
 	public int compareToFirst(Person that) {
 		return this.toString().compareTo(that.toString());
 	}

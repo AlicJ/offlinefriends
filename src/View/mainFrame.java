@@ -6,6 +6,9 @@ import Model.Person;
 import java.util.ArrayList;
 
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -455,6 +458,8 @@ public class mainFrame extends javax.swing.JFrame {
 				searchTime = sw.getTime() - startTime;
 				result = ArrayUtils.addAll(firstNameResults,lastNameResults);
 				Arrays.sort(result);
+				removeDuplicates(result);
+				result = removeNull(result);
 				break;
 			case 3:
 				//initialize RB bst				
@@ -509,7 +514,7 @@ public class mainFrame extends javax.swing.JFrame {
 						lastNameRanks.add(rank);
 					}
 				}
-					
+				
 				lastNameResults = new Person[lastNameRanks.size()];
 				for (int i=0; i<lastNameRanks.size(); i++){
 					lastNameResults[i] = personsLast[lastNameRanks.get(i)];
@@ -518,17 +523,35 @@ public class mainFrame extends javax.swing.JFrame {
 				searchTime = sw.getTime() - startTime;
 				result = ArrayUtils.addAll(firstNameResults,lastNameResults);
 				Arrays.sort(result);
+				removeDuplicates(result);
+				result = removeNull(result);
 				break;
 		}
 		sw.stop();
 		return result;
 	}
 	
-	String upperCase (String inputVal) {
+	public Person[] removeNull(Person[] a) {
+		   ArrayList<Person> removed = new ArrayList<Person>();
+		   for (Person p : a)
+		      if (p != null)
+		         removed.add(p);
+		   return removed.toArray(new Person[0]);
+	}
+	
+	public String upperCase (String inputVal) {
 	    if (inputVal.length() == 0) return "";
 	    if (inputVal.length() == 1) return inputVal.toUpperCase();
 	    return inputVal.substring(0,1).toUpperCase()
 	        + inputVal.substring(1).toLowerCase();
+	}
+	
+	public static void removeDuplicates(Person[] arr) {
+		for (int i=0; i<arr.length-1; i++){
+			if(arr[i].equals(arr[i+1])){
+				arr[i] = null;
+			}
+		}
 	}
 
 	// write search result to file
