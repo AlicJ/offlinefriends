@@ -146,7 +146,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         algType.add(searchBtn1);
         searchBtn1.setSelected(true);
-        searchBtn1.setText("Binary Search");
+        searchBtn1.setText("Linear Search");
         searchBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBtn1ActionPerformed(evt);
