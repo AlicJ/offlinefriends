@@ -8,11 +8,13 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.InitData;
-import Model.Person;
 import algorithm.BST;
 import algorithm.BinarySearch;
+<<<<<<< HEAD
 import algorithm.RedBlackBST;
+=======
+import algorithm.LinearSearch;
+>>>>>>> 1a538e84f2a15e66376aea7764ddda2f025c9aba
 
 public class Testing {
 	InitData model = new InitData(1000);
@@ -20,10 +22,15 @@ public class Testing {
 	Person[] personsLast = new Person[1000];
 	String[] firstNames = new String[personsFirst.length];
 	String[] lastNames = new String[personsLast.length];
+<<<<<<< HEAD
 	BST<String, Integer> firstNamesBST = new BST<String, Integer> ();
 	BST<String, Integer> lastNamesBST = new BST<String, Integer> ();
 	RedBlackBST<String, Integer> firstNamesRBBST = new RedBlackBST<String, Integer> ();
 	RedBlackBST<String, Integer> lastNamesRBBST = new RedBlackBST<String, Integer> ();
+=======
+	BST<String, Integer> firstNamesBST = new BST<> ();
+	BST<String, Integer> lastNamesBST = new BST<> ();
+>>>>>>> 1a538e84f2a15e66376aea7764ddda2f025c9aba
 	
 	@Before
 	public void setUpBeforeClass() throws Exception {
@@ -49,31 +56,45 @@ public class Testing {
 		// Arrays Debug
 		System.out.println("DEBUG");
 		System.out.println("_______________________________");
-		System.out.println(Arrays.toString(firstNames));
-		System.out.println(Arrays.toString(lastNames));
-		String[] personsFirstString = new String[personsFirst.length];
-		String[] personsLastString = new String[personsLast.length];
-		for(int i=0; i<personsFirst.length; i++){
-			personsFirstString[i]=personsFirst[i].toString();
-		}
-		for(int i=0; i<personsLast.length; i++){
-			personsLastString[i]=personsLast[i].toString();
-		}
-		System.out.println(Arrays.toString(personsFirstString));
-		System.out.println(Arrays.toString(personsLastString));
+		System.out.println(Arrays.toString(model.getData()));
+//		System.out.println(Arrays.toString(firstNames));
+//		System.out.println(Arrays.toString(lastNames));
+//		String[] personsFirstString = new String[personsFirst.length];
+//		String[] personsLastString = new String[personsLast.length];
+//		for(int i=0; i<personsFirst.length; i++){
+//			personsFirstString[i]=personsFirst[i].toString();
+//		}
+//		for(int i=0; i<personsLast.length; i++){
+//			personsLastString[i]=personsLast[i].toString();
+//		}
+//		System.out.println(Arrays.toString(personsFirstString));
+//		System.out.println(Arrays.toString(personsLastString));
+//		
+//		/**
+//		 * MERGE SORT
+//		 */
+//		
+//		// Test for Merge Sort
+//		// Goes though the list and compares each element to the previousW
+//		for(int i=1; i<personsFirst.length; i++){
+//			assertTrue(personsFirst[i].compareTo(personsFirst[i-1])>=0);
+//		}
+//		for(int i=1; i<personsLast.length; i++){
+//			assertTrue(personsLast[i].compareToLast(personsLast[i-1])>=0);
+//		}
+		
 		
 		/**
-		 * MERGE SORT
+		 * LINEAR SEARCH
 		 */
-		
-		// Test for Merge Sort
-		// Goes though the list and compares each element to the previousW
-		for(int i=1; i<personsFirst.length; i++){
-			assertTrue(personsFirst[i].compareTo(personsFirst[i-1])>=0);
-		}
-		for(int i=1; i<personsLast.length; i++){
-			assertTrue(personsLast[i].compareToLast(personsLast[i-1])>=0);
-		}
+		System.out.println();
+		System.out.println("LINEAR SEARCH RESULTS");
+		System.out.println("_______________________________");
+		Person[] data = model.getData();
+		Person[] result;
+		result = LinearSearch.search(data, "ali");
+		System.out.println(result.length);
+		System.out.println(Arrays.toString(result));
 		
 		/**
 		 * BINARY SEARCH
@@ -82,7 +103,7 @@ public class Testing {
 		System.out.println("BINARY SEARCH RESULTS");
 		System.out.println("_______________________________");
 		//initialize Binary Search for First Names
-		ArrayList<Integer> firstNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> firstNameRanks = new ArrayList<> ();
 		Integer rank = -2;		
 		String[] temp = firstNames.clone();
 		
@@ -104,12 +125,12 @@ public class Testing {
 		for (int i=0; i<firstNameRanks.size(); i++){
 			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
 		}
-		for (int i=0; i<firstNameResults.length; i++){
-			System.out.println(firstNameResults[i].toString());
+		for (Person firstNameResult : firstNameResults) {
+			System.out.println(firstNameResult.toString());
 		}
 		
 		//initialize Binary Search for Last Names
-		ArrayList<Integer> lastNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> lastNameRanks = new ArrayList<> ();
 		rank = -2;		
 		temp = lastNames.clone();
 		
@@ -128,8 +149,8 @@ public class Testing {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
+		for (Person lastNameResult : lastNameResults) {
+			System.out.println(lastNameResult.toString());
 		}
 		
 		/**
@@ -139,7 +160,7 @@ public class Testing {
 		System.out.println("BINARY SEARCH TREE RESULTS");
 		System.out.println("_______________________________");
 		//initialize Binary Search Tree for First Names
-		firstNameRanks = new ArrayList<Integer> ();
+		firstNameRanks = new ArrayList<> ();
 		rank = -2;		
 		BST tempBST = new BST(firstNamesBST);
 		
@@ -157,12 +178,12 @@ public class Testing {
 		for (int i=0; i<firstNameRanks.size(); i++){
 			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
 		}
-		for (int i=0; i<firstNameResults.length; i++){
-			System.out.println(firstNameResults[i].toString());
+		for (Person firstNameResult : firstNameResults) {
+			System.out.println(firstNameResult.toString());
 		}
 		
 		//initialize Binary Search Tree for Last Names
-		lastNameRanks = new ArrayList<Integer> ();
+		lastNameRanks = new ArrayList<> ();
 		rank = -2;		
 		tempBST = new BST(lastNamesBST);
 		
@@ -180,8 +201,8 @@ public class Testing {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
+		for (Person lastNameResult : lastNameResults) {
+			System.out.println(lastNameResult.toString());
 		}
 		
 		/**

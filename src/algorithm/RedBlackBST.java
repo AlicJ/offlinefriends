@@ -17,7 +17,7 @@ public class RedBlackBST<Key extends String, Value> {
     
     // BST helper node data type
     private class Node {
-        private Key key;           // key
+        private final Key key;           // key
         private Value val;         // associated data
         private Node left, right;  // links to left and right subtrees
         private boolean color;     // color of parent link

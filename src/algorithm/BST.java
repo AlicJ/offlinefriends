@@ -16,7 +16,7 @@ public class BST<Key extends String, Value> {
     public BST() {}
 
 	private class Node {
-        private Key key;           // sorted by key
+        private final Key key;           // sorted by key
         private Value val;         // associated data
         private Node left, right;  // left and right subtrees
         private int N;             // number of nodes in subtree

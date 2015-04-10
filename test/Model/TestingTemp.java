@@ -1,18 +1,9 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-
-import Model.InitData;
-import Model.Person;
 import algorithm.BinarySearch;
 
 public class TestingTemp {
@@ -41,8 +32,10 @@ public class TestingTemp {
 	public void test() {
 //		System.out.println(Arrays.toString(firstNames));
 //		System.out.println(Arrays.toString(lastNames));
-		String[] personsFirstString = new String[personsFirst.length];
-		String[] personsLastString = new String[personsLast.length];
+		String[] personsFirstString;
+		personsFirstString = new String[personsFirst.length];
+		String[] personsLastString;
+		personsLastString = new String[personsLast.length];
 		for(int i=0; i<personsFirst.length; i++){
 			personsFirstString[i]=personsFirst[i].toString();
 		}
@@ -61,7 +54,7 @@ public class TestingTemp {
 		}
 		
 		//initialize Binary Search for First Names
-		ArrayList<Integer> firstNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> firstNameRanks = new ArrayList<> ();
 		int rank = -2;		
 		String[] temp = firstNames.clone();
 		//searches for name
@@ -79,12 +72,12 @@ public class TestingTemp {
 		for (int i=0; i<firstNameRanks.size(); i++){
 			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
 		}
-		for (int i=0; i<firstNameResults.length; i++){
-			System.out.println(firstNameResults[i].toString());
+		for (Person firstNameResult : firstNameResults) {
+			System.out.println(firstNameResult.toString());
 		}
 		
 		//initialize Binary Search for Last Names
-		ArrayList<Integer> lastNameRanks = new ArrayList<Integer> ();
+		ArrayList<Integer> lastNameRanks = new ArrayList<> ();
 		rank = -2;		
 		temp = lastNames.clone();
 		//searches for name
@@ -102,8 +95,8 @@ public class TestingTemp {
 		for (int i=0; i<lastNameRanks.size(); i++){
 			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
 		}
-		for (int i=0; i<lastNameResults.length; i++){
-			System.out.println(lastNameResults[i].toString());
+		for (Person lastNameResult : lastNameResults) {
+			System.out.println(lastNameResult.toString());
 		}
 	}
 
