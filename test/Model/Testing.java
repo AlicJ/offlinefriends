@@ -12,6 +12,7 @@ import Model.InitData;
 import Model.Person;
 import algorithm.BST;
 import algorithm.BinarySearch;
+import algorithm.RedBlackBST;
 
 public class Testing {
 	InitData model = new InitData(1000);
@@ -21,6 +22,8 @@ public class Testing {
 	String[] lastNames = new String[personsLast.length];
 	BST<String, Integer> firstNamesBST = new BST<String, Integer> ();
 	BST<String, Integer> lastNamesBST = new BST<String, Integer> ();
+	RedBlackBST<String, Integer> firstNamesRBBST = new RedBlackBST<String, Integer> ();
+	RedBlackBST<String, Integer> lastNamesRBBST = new RedBlackBST<String, Integer> ();
 	
 	@Before
 	public void setUpBeforeClass() throws Exception {
@@ -29,6 +32,7 @@ public class Testing {
 		for(int i=0; i<personsFirst.length; i++){
 			firstNames[i]=personsFirst[i].getFirstName();
 			firstNamesBST.put(personsFirst[i].getFirstName(), i);
+			firstNamesRBBST.put(personsFirst[i].getFirstName(), i);
 		}
 		
 		model.mergeSortLast();
@@ -36,6 +40,7 @@ public class Testing {
 		for(int i=0; i<personsLast.length; i++){
 			lastNames[i]=personsLast[i].getLastName();
 			lastNamesBST.put(personsLast[i].getLastName(), i);
+			lastNamesRBBST.put(personsLast[i].getLastName(), i);
 		}
 	}
 
@@ -166,6 +171,58 @@ public class Testing {
 		//repeat until no results
 		while(rank != null){
 			rank = (Integer) tempBST.get("Al");
+			if (rank != null){
+				lastNameRanks.add(rank);
+			}
+		}
+			
+		lastNameResults = new Person[lastNameRanks.size()];
+		for (int i=0; i<lastNameRanks.size(); i++){
+			lastNameResults[i] = personsLast[lastNameRanks.get(i)];
+		}
+		for (int i=0; i<lastNameResults.length; i++){
+			System.out.println(lastNameResults[i].toString());
+		}
+		
+		/**
+		 *  RED BLACK BINARY SEARCH TREE
+		 */
+		System.out.println();
+		System.out.println("RED BLACK BINARY SEARCH TREE RESULTS");
+		System.out.println("_______________________________");
+		//initialize Binary Search Tree for First Names
+		firstNameRanks = new ArrayList<Integer> ();
+		rank = -2;		
+		RedBlackBST tempRBBST = new RedBlackBST(firstNamesRBBST);
+		
+		//searches for name
+		//if name is found, record the rank, and remove the name from temp array
+		//repeat until no results
+		while(rank != null){
+			rank = (Integer) tempRBBST.get("Al");
+			if (rank != null){
+				firstNameRanks.add(rank);
+			}
+		}
+			
+		firstNameResults = new Person[firstNameRanks.size()];
+		for (int i=0; i<firstNameRanks.size(); i++){
+			firstNameResults[i] = personsFirst[firstNameRanks.get(i)];
+		}
+		for (int i=0; i<firstNameResults.length; i++){
+			System.out.println(firstNameResults[i].toString());
+		}
+		
+		//initialize Binary Search Tree for Last Names
+		lastNameRanks = new ArrayList<Integer> ();
+		rank = -2;		
+		tempRBBST = new RedBlackBST(lastNamesRBBST);
+		
+		//searches for name
+		//if name is found, record the rank, and remove the name from temp array
+		//repeat until no results
+		while(rank != null){
+			rank = (Integer) tempRBBST.get("Al");
 			if (rank != null){
 				lastNameRanks.add(rank);
 			}

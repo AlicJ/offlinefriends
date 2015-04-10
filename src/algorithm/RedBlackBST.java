@@ -1,15 +1,19 @@
 package algorithm;
 
-public class RedBlackBST<Key extends Comparable<Key>, Value> {
+import java.util.NoSuchElementException;
+
+public class RedBlackBST<Key extends String, Value> {
 
     private static final boolean RED   = true;
     private static final boolean BLACK = false;
 
     private Node root;     // root of the BST
 
-    public RedBlackBST(RedBlackBST another){
-    	this.root = another.root;
+    public RedBlackBST(RedBlackBST<Key,Value> that){
+    	this.root=that.root;
     }
+    
+    public RedBlackBST() {}
     
     // BST helper node data type
     private class Node {
@@ -54,9 +58,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Value get(Node x, Key key) {
         while (x != null) {
             int cmp = key.compareTo(x.key);
-            if      (cmp < 0) x = x.left;
-            else if (cmp > 0) x = x.right;
-            else              return x.val;
+            if      (cmp < 0 && !x.key.contains(key)) return get(x.left, key);
+            else if (cmp > 0 && !x.key.contains(key)) return get(x.right, key);
+            else{
+            	Value ret = x.val;
+            	delete(x.key);
+            	return ret;
+            }
         }
         return null;
     }
@@ -141,5 +149,140 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (x.left == null) return x; 
         else                return min(x.left); 
     } 
+    
+ // delete the key-value pair with the given key
+    public void delete(Key key) {
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = delete(root, key);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the given key rooted at h
+    private Node delete(Node h, Key key) { 
+        // assert get(h, key) != null;
+
+        if (key.compareTo(h.key) < 0)  {
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left, key);
+        }
+        else {
+            if (isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                Node x = min(h.right);
+                h.key = x.key;
+                h.val = x.val;
+                // h.val = get(h.right, min(h.right).key);
+                // h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right, key);
+        }
+        return balance(h);
+    }
+    
+    // delete the key-value pair with the minimum key
+    public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("BST underflow");
+
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the minimum key rooted at h
+    private Node deleteMin(Node h) { 
+        if (h.left == null)
+            return null;
+
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+
+        h.left = deleteMin(h.left);
+        return balance(h);
+    }
+
+
+    // delete the key-value pair with the maximum key
+    public void deleteMax() {
+        if (isEmpty()) throw new NoSuchElementException("BST underflow");
+
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the maximum key rooted at h
+    private Node deleteMax(Node h) { 
+        if (isRed(h.left))
+            h = rotateRight(h);
+
+        if (h.right == null)
+            return null;
+
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+
+        h.right = deleteMax(h.right);
+
+        return balance(h);
+    }
+    
+ // Assuming that h is red and both h.left and h.left.left
+    // are black, make h.left or one of its children red.
+    private Node moveRedLeft(Node h) {
+        // assert (h != null);
+        // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+
+        flipColors(h);
+        if (isRed(h.right.left)) { 
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    // Assuming that h is red and both h.right and h.right.left
+    // are black, make h.right or one of its children red.
+    private Node moveRedRight(Node h) {
+        // assert (h != null);
+        // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
+        flipColors(h);
+        if (isRed(h.left.left)) { 
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    // restore red-black tree invariant
+    private Node balance(Node h) {
+        // assert (h != null);
+
+        if (isRed(h.right))                      h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right))     flipColors(h);
+
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
+    }
 }
 
