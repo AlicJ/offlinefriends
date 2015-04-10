@@ -401,13 +401,13 @@ public class mainFrame extends javax.swing.JFrame {
 				personData.mergeSortFirst();
 				personsFirst = personData.getData().clone();
 				for(int i=0; i<personsFirst.length; i++){
-					firstNamesBST.put(personsFirst[i].getFirstName(), i);
+					firstNamesBST.put(personsFirst[i].getFirstName() + personsFirst[i].getLastName().toLowerCase(), i);
 				}
 				
 				personData.mergeSortLast();
 				personsLast = personData.getData().clone();
 				for(int i=0; i<personsLast.length; i++){
-					lastNamesBST.put(personsLast[i].getLastName(), i);
+					lastNamesBST.put(personsLast[i].getLastName() + personsLast[i].getLastName().toLowerCase(), i);
 				}
 				
 				startTime = sw.getTime();
@@ -464,13 +464,13 @@ public class mainFrame extends javax.swing.JFrame {
 				personData.mergeSortFirst();
 				personsFirst = personData.getData().clone();
 				for(int i=0; i<personsFirst.length; i++){
-					firstNamesRBBST.put(personsFirst[i].getFirstName(), i);
+					firstNamesRBBST.put(personsFirst[i].getFirstName() + personsFirst[i].getLastName().toLowerCase(), i);
 				}
 				
 				personData.mergeSortLast();
 				personsLast = personData.getData().clone();
 				for(int i=0; i<personsLast.length; i++){
-					lastNamesRBBST.put(personsLast[i].getLastName(), i);
+					lastNamesRBBST.put(personsLast[i].getLastName() + personsLast[i].getLastName().toLowerCase(), i);
 				}
 				
 				startTime = sw.getTime();
